@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Marathon</title>
+    <style>
+        #input-form {
+            width: 300px;
+        }
+
+        #input-form > div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        table, tr, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<div id="input-form">
+    <div>First Name:<input id="first-name" type="text"></div>
+    <div>Last Name:<input id="last-name" type="text"></div>
+    <div>Code:<input id="code" type="text"></div>
+    <div>Age:<input id="age" type="text"></div>
+    <div>Gender:<select id="gender">
+        <option value="m">Male</option>
+        <option value="f">Female</option>
+    </select></div>
+</div>
+<button onclick="addRunner()">Add Runner</button>
+<p>Confirmed Runners: <span id="confirmed">0</span></p>
+</body>
+<script>
+
+    let runners = [];
+    let confirmedRunners = [];
+
+    function addRunner() {
+        let fName = document.getElementById('first-name').value;
+        let lName = document.getElementById('last-name').value;
+        let code = document.getElementById('code').value;
+        let age = document.getElementById('age').value;
+        let gender = document.getElementById('gender').value;
+
+        let tag = getTag(code);
+        console.log(tag);
+
+        let runner = {
+            firstName: fName,
+            lastName: lName,
+            age: age,
+            gender: gender,
+            tag: tag
+        }
+        runners.push(runner);
+        renderRunnersTable();
+    }
+
+
+    function renderRunnersTable() {
+        if (document.body.children.length > 3) {
+            document.body.lastChild.remove();
+        }
+        let table = document.createElement('table');
+        table.setAttribute('id', 'runners-table');
+        let tableHead = document.createElement('tr');
+        tableHead.innerHTML = `<th>First Name</th><th>Last Name</th><th>Runner Tag</th><th>----</th>`;
+        table.appendChild(tableHead);
+        let counter = 0;
+        for (let runner of runners) {
+            let tbody = ``;
+            if ((runner.age < 18 || confirmedRunners.includes(runner)) && runner.gender === 'm') {
+                tbody += `<tr style="background-color: aqua"><td>${runner.firstName}</td><td>${runner.lastName}</td><td>${runner.tag}</td><td><button disabled="disabled">Confirm</button><button disabled="disabled">Delete</button></td></tr>`
+            } else if ((runner.age < 18 || confirmedRunners.includes(runner)) && runner.gender === 'f') {
+                tbody += `<tr style="background-color: pink"><td>${runner.firstName}</td><td>${runner.lastName}</td><td>${runner.tag}</td><td><button disabled="disabled">Confirm</button><button disabled="disabled">Delete</button></td></tr>`
+            } else if (runner.gender === 'm') {
+                tbody += `<tr style="background-color: aqua"><td>${runner.firstName}</td><td>${runner.lastName}</td><td>${runner.tag}</td><td><button onclick="confirmRunner(${counter})">Confirm</button><button onclick="deleteRunner(${counter})">Delete</button></td></tr>`
+            } else if (runner.gender === 'f') {
+                tbody += `<tr style="background-color: pink"><td>${runner.firstName}</td><td>${runner.lastName}</td><td>${runner.tag}</td><td><button onclick="confirmRunner(${counter})">Confirm</button><button onclick="deleteRunner(${counter})">Delete</button></td></tr>`
+            }
+            counter++;
+            table.innerHTML += tbody;
+        }
+        document.body.appendChild(table)
+    }
+
+    function confirmRunner(index) {
+        confirmedRunners.push(runners[index]);
+        updateConfirmed();
+        renderRunnersTable();
+    }
+
+    function deleteRunner(index) {
+        runners.splice(index, 1);
+        renderRunnersTable();
+    }
+
+    function getTag(code) {
+        code = String(code);
+        code = code.replace(/[1234]/g, '')
+        let newCode = ``;
+        for (let i = 0;i<code.length;i++) {
+            if (isLower(code[i])) {
+                newCode += code[i].toUpperCase();
+            } else {
+                newCode += code[i].toLowerCase();
+            }
+        }
+        return newCode;
+    }
+
+    function isLower(char) {
+        return char === char.toLowerCase();
+    }
+
+    function updateConfirmed() {
+        let confirmed = document.getElementById('confirmed');
+        confirmed.innerText = confirmedRunners.length.toString();
+    }
+</script>
+</html>

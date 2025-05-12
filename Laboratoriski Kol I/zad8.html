@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z8</title>
+</head>
+<body>
+</body>
+<script>
+    /*
+    Преку тастатура се внесуваат броеви се додека не се внесе знак.
+    По внесувањето на знак, на екран да се прикажат сите парни негативни
+    броеви кои се внесени и колку вкупно ги има.
+     */
+
+    let inputLine = prompt("Vnesi broj");
+    let counter = 0;
+
+    while (!isNaN(inputLine)) {
+
+        if (parseInt(inputLine) % 2 === 0 && parseInt(inputLine) < 0) {
+            document.write(parseInt(inputLine) + '<br>');
+            counter++;
+        }
+
+        inputLine = prompt("Vnesi broj");
+    }
+    document.write('Vkupno: ' + counter);
+</script>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>InputRGB</title>
+    <style>
+        #input-rgb > div {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="input-rgb">
+    <div>Red:<input id="red-value" placeholder="0" type="text">(0-255)</div>
+    <div>Green:<input id="green-value" placeholder="0" type="text">(0-255)</div>
+    <div>Blue:<input id="blue-value" placeholder="0" type="text">(0-255)</div>
+    <div><input id="start" type="radio">Start</div>
+    <div><input id="end" type="radio">End</div>
+    <div>Text:<input id="input-text" type="text"></div>
+    <button onclick="addInput()">Add</button>
+    <button onclick="deleteInput()">Delete</button>
+</div>
+<div id="text-container"></div>
+</body>
+<script>
+    let inputs = []
+
+    function addInput() {
+        let red = parseInt(document.getElementById('red-value').value);
+        let green = parseInt(document.getElementById('green-value').value);
+        let blue = parseInt(document.getElementById('blue-value').value);
+        let checkStart = document.getElementById('start').checked;
+        let checkEnd = document.getElementById('end').checked;
+
+        let inputText = document.getElementById('input-text').value;
+
+        let textDiv = document.getElementById('text-container');
+        let pElement = document.createElement('p');
+        pElement.innerText = inputText;
+        pElement.style.color = `rgb(${red},${green},${blue})`;
+
+        if(checkStart && textDiv.children.length!==0){
+            textDiv.insertBefore(pElement, textDiv.firstElementChild);
+        }else{
+            textDiv.appendChild(pElement);
+        }
+
+        document.getElementById('end').checked = false;
+        document.getElementById('start').checked = false;
+        document.getElementById('input-text').value = '';
+    }
+
+    function deleteInput(){
+        let checkStart = document.getElementById('start').checked;
+        let checkEnd = document.getElementById('end').checked;
+
+        if(!checkStart && !checkEnd){
+            alert('Select start or end!');
+            return;
+        }
+        let textDiv = document.getElementById('text-container');
+
+        if(checkStart){
+            textDiv.firstElementChild.remove();
+        }else{
+            textDiv.lastElementChild.remove();
+        }
+
+
+        document.getElementById('start').checked = false;
+        document.getElementById('end').checked = false;
+    }
+
+
+
+</script>
+</html>

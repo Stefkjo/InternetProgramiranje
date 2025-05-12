@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UserCards</title>
+    <style>
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-container {
+            width: 300px;
+        }
+
+        .form-container > div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 170px;
+            text-align: center;
+        }
+
+        .user-card {
+            display: inline-block;
+            margin: 15px 10px;
+        }
+
+        .user-card > p, button {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<h1>User Cards</h1>
+<div class="form-container">
+    <div>Username<input id="username" type="text"></div>
+    <div>ID<input id="ID" type="text"></div>
+    <div>Width<input id="width" type="text"></div>
+    <div>Height<input id="height" type="text"></div>
+    <div>Color<select id="color">
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="yellow">Yellow</option>
+    </select></div>
+    <button onclick="addUserCard()">Add</button>
+</div>
+<p>Total sold: <span id="total-sold"><strong>0</strong></span></p>
+<div id="card-container"></div>
+</body>
+<script>
+    let total = 0;
+
+    function addUserCard() {
+        let username = document.getElementById('username').value;
+        let id = document.getElementById('ID').value;
+        let width = document.getElementById('width').value;
+        let height = document.getElementById('height').value;
+        let color = document.getElementById('color').value;
+
+        if (username.length === 0 || id.length === 0 || width.length === 0 || height.length === 0) {
+            alert("Enter all input lines!!!");
+            return;
+        }
+
+        if (id.match(/[A-Z0-9]/) != null) {
+            alert("Invalid ID!!!");
+            return;
+        }
+
+        if (height <= 0 || height > 500 || width <= 0 || width > 500) {
+            alert("Enter another width/height amount!");
+            return;
+        }
+
+        let totalPrice = (parseInt(width) * parseInt(height)) * 0.5
+        if (color === "red") {
+            totalPrice += 1000;
+        }
+        let card = "";
+        let checkCard = document.getElementById(`${id}`);
+        if (checkCard != null) {
+            let sum = document.getElementById('sum').innerText;
+            let sumParts = sum.split(":");
+            total -= parseInt(sumParts[2]);
+            checkCard.style.backgroundColor = `${color}`;
+            checkCard.style.width = `${width}`;
+            checkCard.style.height = '${height}';
+            checkCard.innerHTML = `<p>ID: ${id}<p>
+                    <p>Width: ${width}</p>
+                    <p>Height: ${height}</p>
+                    <p>Color: ${color}</p>
+                    <p>Vkupna suma: ${totalPrice}</p>
+                    <button onclick="sellCard()">Sell</button>`;
+
+        } else {
+            card = `<div id="${id}" class="user-card" style="width: ${parseInt(width)}px; height: ${parseInt(height)}px;background-color: ${color}" ><p>ID: ${id}<p>
+                    <p>Width: ${width}</p>
+                    <p>Height: ${height}</p>
+                    <p>Color: ${color}</p>
+                    <p>Vkupna suma: ${totalPrice}</p>
+                    <button onclick="sellCard(this)">Sell</button></div>`;
+
+        }
+
+        let divContainer = document.getElementById('card-container');
+        divContainer.innerHTML += card;
+
+
+    }
+
+    function sellCard(btn) {
+        let getTotalSold = document.getElementById('total-sold');
+        let cardSumParts = btn.previousElementSibling.innerText.split(':');
+        let cardAmount = parseInt(cardSumParts[1]);
+        console.log(cardSumParts);
+        getTotalSold.innerHTML = total;
+
+    }
+
+</script>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z4</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+<h1>Football team chart</h1>
+<select onchange="displayTeams()" id="position">
+    <option value="All">All</option>
+    <option value="Forward">Forward</option>
+    <option value="Defender">Defender</option>
+    <option value="Midfielder">Midfielder</option>
+    <option value="Goalkeeper">Goalkeeper</option>
+</select>
+
+<div id="football-teams"></div>
+</body>
+<script>
+
+    let data = `[
+  {
+    "team": "Manchester United",
+    "players": [
+      { "name": "Marcus Rashford", "role": "Forward", "goals": 18, "assists": 7, "saves": 0 },
+      { "name": "Bruno Fernandes", "role": "Midfielder", "goals": 10, "assists": 15, "saves": 0 },
+      { "name": "Casemiro", "role": "Midfielder", "goals": 4, "assists": 6, "saves": 0 },
+      { "name": "Luke Shaw", "role": "Defender", "goals": 2, "assists": 3, "saves": 0 },
+      { "name": "David De Gea", "role": "Goalkeeper", "goals": 0, "assists": 0, "saves": 92 }
+    ]
+  },
+  {
+    "team": "Chelsea",
+    "players": [
+      { "name": "Raheem Sterling", "role": "Forward", "goals": 12, "assists": 5, "saves": 0 },
+      { "name": "Mason Mount", "role": "Midfielder", "goals": 8, "assists": 10, "saves": 0 },
+      { "name": "Enzo Fernández", "role": "Midfielder", "goals": 2, "assists": 4, "saves": 0 },
+      { "name": "Thiago Silva", "role": "Defender", "goals": 1, "assists": 2, "saves": 0 },
+      { "name": "Kepa Arrizabalaga", "role": "Goalkeeper", "goals": 0, "assists": 0, "saves": 84 }
+    ]
+  }
+]
+`
+
+    function displayTeams(){
+        let teamsData = JSON.parse(data);
+        let position = document.getElementById('position').value;
+        let filteredTeams = teamsData.map(team => ({
+            team: team.team,
+            players: team.players.filter(player => position==='All' || player.role===position)
+        }))
+
+
+        let teamOnePlayers = filteredTeams[0].players;
+        let teamTwoPlayers = filteredTeams[1].players;
+
+        let layout = ({
+            title: 'Football Player Stats Comparison',
+            barmode: 'stack',
+            xaxis: {title: 'Goals'},
+            yaxis: {title: 'Players', automargin: true},
+            height: 500,
+            legend: {orientation: 'h'} })
+
+        let traceTeamA = ({
+            x: teamOnePlayers.map(player => player.goals),
+            y: teamOnePlayers.map(player => player.name),
+            name: 'Team One',
+            type: 'bar',
+            orientation: 'h',
+            marker: {color:'blue'}
+        })
+
+        let traceTeamB = ({
+            x: teamTwoPlayers.map(player => player.goals),
+            y: teamTwoPlayers.map(player => player.name),
+            name: 'Team Two',
+            type: 'bar',
+            orientation: 'h',
+            marker: {color:'red'}
+        })
+        console.log(traceTeamA);
+        Plotly.newPlot('football-teams', [traceTeamA, traceTeamB], layout);
+    }
+
+    displayTeams()
+</script>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z1</title>
+</head>
+<style>
+
+    label{
+        display: inline-block;
+        width: 100px;
+    }
+    div{
+        margin-bottom: 5px;
+    }
+
+
+</style>
+<body>
+<h2>Форма за контакт</h2>
+<form>
+    <div><label>Име<input type="text" id="firstName"></label></div>
+    <div><label>Презиме<input type="text" id="lastName"></label></div>
+    <div><label>Email<input type="text" id="email"></label></div>
+    <div><label>Возраст
+            <select id="age">
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+            </select>
+        </label></div>
+    <div><label><input value="Прати" type="submit" onclick="sendInfo(event)" id="submitButton"></label></div>
+    <div><label><input type="text" disabled="disabled" id="finalMessage"></label></div>
+</form>
+</body>
+<script>
+
+    function sendInfo(event){
+
+        event.preventDefault();
+        let firstNameElement = document.getElementById('firstName');
+        let lastNameElement = document.getElementById('lastName');
+        let emailElement = document.getElementById('email');
+        let ageElement = document.getElementById('age');
+
+        if(firstNameElement.value==="" || lastNameElement.value==="" || emailElement.value===""){
+            alert("Must fill all the input lines!");
+        }
+
+        let checkConfirm = confirm(`Господине ${firstNameElement.value} ${lastNameElement.value} дали сте сигурни?`);
+        if (checkConfirm) {
+            this.document.getElementById('finalMessage').value = `Податоците се успешно испратени.`;
+        } else {
+            alert("Вашите податоци не се испратени.");
+        }
+
+        firstNameElement.value = "";
+        lastNameElement.value = "";
+        emailElement.value = "";
+        ageElement.value= ageElement.firstElementChild.value;
+
+
+    }
+
+
+
+</script>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z1</title>
+</head>
+<style>
+    body{
+        height: 100vh;
+    }
+    div {
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    label {
+        display: inline-block;
+        margin-right: 10px;
+        width: 150px;
+    }
+
+    input {
+        width: 250px;
+        height: 20px;
+    }
+    #formContainer > div{
+        margin:10px 0;
+    }
+
+    option {
+        width: 295px;
+        text-align: center
+    }
+
+    table tr, th, td{
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    tr,td{
+        padding: 5px 10px;
+    }
+
+    .container {
+        display: inline-block;
+        padding: 20px;
+
+    }
+    button{
+        cursor: pointer;
+    }
+
+
+</style>
+<body>
+<h1>Online shop</h1>
+<div id="formContainer">
+<div><label>Name and surname<input type="text" id="first-last-name"></label></div>
+<div><label>Item<input type="text" id="item-name"></label></div>
+<div><label>Item code<input type="text" id="item-code"></label></div>
+<div><label>Item descriptionM<input type="text" id="item-description"></label></div>
+<div><label>Price<input type="text" id="item-price"></label></div>
+<div><label>Used<select id="item-type">
+    <option value="used">used</option>
+    <option value="unused">unused</option>
+</select></label></div>
+</div>
+
+<button onclick="addItem()" id="add-button">Add</button>
+
+<p>Active items: <span id="countItems"><strong>0</strong></span></p>
+
+<div class="container">
+
+    <h3>Unused items</h3>
+
+    <table id="unusedTable">
+        <tr>
+            <th>Name</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Code</th>
+            <th>Number</th>
+            <th>Actions</th>
+        </tr>
+    </table>
+</div>
+
+<div class="container">
+    <h3>Used items</h3>
+
+    <table  id="usedTable">
+        <tr>
+            <th>Name</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Code</th>
+            <th>Number</th>
+            <th>Actions</th>
+        </tr>
+    </table>
+</div>
+</body>
+
+<script>
+
+    let codeList = [];
+
+    function addItem() {
+        let firstLastNameEl = document.getElementById('first-last-name');
+        let itemNameEl = document.getElementById('item-name');
+        let itemCodeEl = document.getElementById('item-code');
+        let itemDescEl = document.getElementById('item-description');
+        let itemPriceEl = document.getElementById('item-price');
+        let itemTypeEl = document.getElementById('item-type');
+
+        if (firstLastNameEl.value === "" || itemNameEl.value === "" || itemCodeEl.value === "" || itemDescEl.value === "" || itemPriceEl.value === "") {
+            alert("Please enter all input lines.");
+        }
+
+        if(parseInt(itemPriceEl.value)<=0){
+            alert("Invalid price number!");
+        }
+
+        let tableRow = document.createElement('tr')
+        let nameContainer = document.createElement('td');
+        let itemContainer = document.createElement('td');
+        let priceContainer = document.createElement('td');
+        let codeContainer = document.createElement('td');
+        let numberContainer = document.createElement('td');
+        let actionContainer = document.createElement('td');
+        let buttonSold = document.createElement('button');
+        buttonSold.innerText = "Sold";
+        buttonSold.setAttribute('onclick', 'soldItem(this)');
+
+        let number = itemCodeEl.value.replace(/[0-9!]/g, "");
+
+
+        nameContainer.innerText = firstLastNameEl.value.split(" ")[0];
+
+        itemContainer.innerText = itemNameEl.value;
+
+        priceContainer.innerText = (parseInt(itemPriceEl.value)+(parseInt(itemPriceEl.value)*0.10)).toString();
+
+        codeContainer.innerText = itemCodeEl.value;
+
+        numberContainer.innerText = number;
+        actionContainer.append(buttonSold);
+
+        tableRow.append(nameContainer);
+        tableRow.append(itemContainer);
+        tableRow.append(priceContainer);
+        tableRow.append(codeContainer);
+        tableRow.append(numberContainer);
+        tableRow.append(actionContainer);
+
+        if(itemTypeEl.value==="used" && codeList.indexOf(itemCodeEl.value)===-1){
+            let uTableEl = document.getElementById('usedTable');
+            codeList.push(itemCodeEl.value);
+            uTableEl.append(tableRow);
+
+            let activeItemsCount = document.getElementById('countItems');
+            activeItemsCount.innerText = codeList.length.toString();
+
+        }else if(itemTypeEl.value==="unused" && codeList.indexOf(itemCodeEl.value)===-1){
+            let uTableEl = document.getElementById('unusedTable');
+            codeList.push(itemCodeEl.value);
+            uTableEl.append(tableRow);
+
+            let activeItemsCount = document.getElementById('countItems');
+            activeItemsCount.innerText = codeList.length.toString();
+        }else{
+            alert("Item with the same code already is posted!")
+        }
+
+        firstLastNameEl.value = "";
+        itemNameEl.value = "";
+        itemCodeEl.value = "";
+        itemDescEl.value = "";
+        itemPriceEl.value = "";
+
+    }
+
+    function soldItem(btnSold) {
+        let itemRow = btnSold.parentElement.parentElement;
+        itemRow.style.backgroundColor = 'yellow';
+
+        let codeBox = itemRow.children[3];
+        let codeIndex = codeList.indexOf(codeBox.innerText);
+        codeList.splice(codeIndex,1);
+
+        let activeItemsCount = document.getElementById('countItems');
+        activeItemsCount.innerText = codeList.length.toString();
+
+        btnSold.remove();
+    }
+
+</script>
+</html>

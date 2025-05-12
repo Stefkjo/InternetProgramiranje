@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reaction Speed</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Impact, sans-serif;
+        }
+
+        #wrapper {
+            display: flex; /* Align children horizontally */
+            width: 100%;
+        }
+
+        #container, #results {
+            width: 50vw;
+            height: 100vh;
+            border: 1px solid black;
+        }
+
+        #container {
+            background: lightgreen;
+        }
+
+        #results {
+            background: lightcoral;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #container > p, #results > p {
+            text-align: center;
+            font-size: 45px;
+            margin: 10px 15px;
+            padding: 5px 10px;
+            color: darkslategray;
+        }
+
+        #result_chart {
+            width: 500px;
+            height: 500px;
+            margin-top: 20px;
+        }
+
+        #start {
+            cursor: pointer;
+        }
+
+        .circle {
+            border: 1px solid black;
+            border-radius: 100%;
+            position: absolute;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div id="container">
+        <p id="start" onclick="startGame()" onmouseover="growText()" onmouseleave="shrinkText()">START GAME</p>
+    </div>
+    <div id="results">
+        <p>Results</p>
+        <div id="result_chart"></div>
+    </div>
+</div>
+
+
+<script>
+    let string = `[
+        {
+        "type": "smallCircle",
+        "color": "red",
+        "size": 25,
+        "points": 50
+    },
+    {
+        "type": "mediumCircle",
+        "color": "blue",
+        "size": 30,
+        "points": 30
+    },
+    {
+        "type": "largeCircle",
+        "color": "green",
+        "size": 40,
+        "points": 20
+    },
+    {
+        "type": "extraLargeCircle",
+        "color": "yellow",
+        "size": 50,
+        "points": 10
+    }]`
+
+
+    let circles = JSON.parse(string);
+    console.log(circles);
+
+    function startGame() {
+
+        document.getElementById('start').remove()
+        let counter = document.createElement('p');
+        counter.setAttribute('id', 'counter');
+        counter.innerHTML = '3';
+        document.getElementById('container').appendChild(counter)
+        anime({
+            targets: counter,
+            innerText: [3, 0],
+            round: 1,
+            duration: 3200,
+            easing: 'linear',
+            update: function (anim) {
+                if ((Math.round(anim.animatables[0].target.innerText) <= 0)) {
+                    counter.innerText = '0';
+                }
+            },
+            complete: function () {
+                counter.remove();
+                spawnCircles();
+            }
+        })
+    }
+
+    function shrinkText() {
+        anime({
+            targets: '#start',
+            scale: [1.6, 1],
+            duration: 500,
+            easing: 'easeInOutSine'
+        })
+    }
+
+    function growText() {
+        anime({
+            targets: '#start',
+            scale: [1, 1.6],
+            duration: 500,
+            easing: 'easeInOutQuad'
+        })
+    }
+
+    let repeats = 0;
+    let points = 0;
+    let counterRed = 0;
+    let counterGreen = 0;
+    let counterBlue = 0;
+    let counterYellow = 0;
+    function spawnCircles() {
+
+        let containerEl = document.getElementById('container');
+        let containerRect = containerEl.getBoundingClientRect();
+        let leftBorder = 50;
+        let rightBorder = parseInt(containerRect.width - 50);
+        let topBorder = 50;
+        let bottomBorder = parseInt(containerRect.height - 50);
+
+        circles.forEach(circle => {
+            let randomX = anime.random(leftBorder, rightBorder);
+            let randomY = anime.random(topBorder, bottomBorder);
+
+            let circleEl = document.createElement('div');
+            circleEl.classList.add('class', 'circle');
+            circleEl.setAttribute('onclick', 'clickedCircle(this)')
+            circleEl.setAttribute('score', `${circle.points}`)
+            circleEl.style.left = randomX + 'px';
+            circleEl.style.top = randomY + 'px';
+            circleEl.style.width = circle.size + 'px'
+            circleEl.style.height = circle.size + 'px'
+            circleEl.style.background = circle.color;
+            containerEl.appendChild(circleEl)
+            anime({
+                targets: circleEl,
+                opacity: [0, 1],
+                duration: 500,
+                easing: 'easeInOutSine',
+                complete: function () {
+                    setTimeout(() => {
+                        anime({
+                            targets: circleEl,
+                            opacity: [1, 0],
+                            duration: 500,
+                            easing: 'easeInOutSine',
+                            complete: function () {
+                                circleEl.remove()
+                            }
+                        })
+                    }, 1000)
+                }
+            })
+        })
+
+        repeats++;
+        if (repeats < 3) {
+            setTimeout(spawnCircles, 3000)
+        } else {
+            setTimeout(displayResults, 2000)
+        }
+    }
+
+    function displayResults() {
+        let gameContainer = document.getElementById('container')
+        let resultContainer = document.getElementById('results')
+        anime({
+            targets: gameContainer,
+            opacity: [1, 0],
+            duration: 3000,
+            easing: 'linear',
+            complete: function () {
+                container.remove();
+            }
+        })
+        setTimeout(() => {
+            anime({
+                targets: resultContainer,
+                translateX: ['0','0vw'],
+                width: ['50vw', '100vw'],
+                duration:3000,
+                easing: 'linear'
+            })
+        },1000)
+        setTimeout(displayResultChart, 6000);
+    }
+
+    function clickedCircle(circle){
+        points+= parseInt(circle.getAttribute('score'))
+        if(circle.style.background==='red'){
+            counterRed++;
+        }
+        if(circle.style.background==='blue'){
+            counterBlue++;
+        }
+        if(circle.style.background==='green'){
+            counterGreen++;
+        }
+        if(circle.style.background==='yellow'){
+            counterYellow++;
+        }
+    }
+
+    function displayResultChart(){
+
+        var data = [{
+            values: [counterRed, counterGreen, counterBlue, counterYellow],
+            labels: ['Red', 'Green', 'Blue', 'Yellow'],
+            type: 'pie',
+            marker: {
+                colors: ['red', 'green', 'blue', 'yellow']
+            }
+        }];
+
+        var layout = {
+            height: 500,
+            width: 500,
+            title:'Circles hit'
+        };
+
+        Plotly.newPlot('result_chart', data, layout);
+
+        if(points>=200){
+            console.log('You did very well :)')
+        }else{
+            console.log('You did not so well :/');
+        }
+    }
+
+
+
+
+</script>
+</body>
+</html>

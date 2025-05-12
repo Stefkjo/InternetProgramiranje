@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+</head>
+<style>
+    #post-details, #removed-links {
+        width: 300px;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    #post-details > div {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    #post-details > div > textarea {
+        height: 100px;
+    }
+
+    table, tr, td, th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    .action {
+        padding: 5px 10px;
+        width: 70px;
+        text-align: center;
+    }
+
+    .action > button {
+        width: 60px;
+        margin: 5px 0;
+    }
+    /*td{*/
+    /*    max-width: 300px;*/
+    /*    word-wrap: break-word;*/
+    /*    overflow-wrap: break-word;*/
+    /*    white-space: normal;*/
+    /*}*/
+</style>
+<body>
+<div id="post-details">
+    <h2>Post details</h2>
+    <div>Title<input type="text" id="title"></div>
+    <div>Post<textarea id="post"></textarea></div>
+    <div>Content type<input id="free" type="radio">Free<input id="paid" type="radio">Paid</div>
+    <div>Category<select id="category">
+        <option value="science">Science</option>
+        <option value="education">Education</option>
+        <option value="Industry">Industry</option>
+    </select></div>
+    <div>
+        <button onclick="importPost()">Import post</button>
+    </div>
+</div>
+<div id="removed-links">
+    <h2>Removed links</h2>
+    <ul id="links"></ul>
+</div>
+<h2>Published posts <span id="published">0</span></h2>
+<table id="table-posts">
+    <tr>
+        <th>Title</th>
+        <th>Post</th>
+        <th>Link</th>
+        <th>Type</th>
+        <th>Category</th>
+        <th>Action</th>
+    </tr>
+</table>
+
+</body>
+<script>
+
+    let startData = []
+    let posts = [];
+    let publishedPosts = [];
+    let removedPosts = [];
+
+    function importPost() {
+        let title = document.getElementById('title').value;
+        let post = document.getElementById('post').value;
+        let free = document.getElementById('free').checked;
+        let paid = document.getElementById('free').checked;
+        let category = document.getElementById('category').value;
+        let status;
+
+        title.replace(/[^a-zA-Z0-9]/,'');
+        title.toLowerCase();
+
+        if (free) {
+            status = 'free'
+        } else {
+            status = 'paid'
+        }
+
+        let blogPost = {
+            title: title,
+            post: post,
+            postLink: `finki.ukim.mk/${title}`,
+            status: status,
+            category: category,
+            published: false
+        }
+
+        posts.push(blogPost);
+        document.getElementById('free').checked = false;
+        document.getElementById('paid').checked = false;
+
+        renderTablePosts();
+
+    }
+
+
+    function renderTablePosts() {
+        let table = document.getElementById('table-posts');
+        table.innerHTML = '<tr><th>Title</th><th>Post</th><th>Link</th><th>Type</th><th>Category</th><th>Action</th></tr>';
+        let string = ``;
+        let counter = 0;
+        posts.forEach(post => {
+            if (!post.published) {
+                string += `<tr class="row-${counter}"><td>${post.title}</td><td style="max-width: 300px; word-wrap: break-word">${post.post}</td><td>${post.postLink}</td><td>${post.status}</td><td>${post.category}</td><td class="action"><button onclick="publishPost(${counter})">Publish</button><button onclick="removePost(${counter})">Remove</button></td></tr>`
+            } else {
+                string += `<tr class="row-${counter}" style="background-color: #4682B4"><td>${post.title}</td><td>${post.post}</td><td>${post.postLink}</td><td>${post.status}</td><td>${post.category}</td><td class="action"><button disabled='disabled'>Publish</button><button disabled='disabled'>Remove</button></td></tr>`
+            }
+            counter++;
+        })
+        table.innerHTML += string
+    }
+
+    function publishPost(index) {
+        publishedPosts.push(posts[index])
+        posts[index].published = true;
+        updatePublishedPosts();
+        renderTablePosts();
+    }
+
+    function updatePublishedPosts() {
+        let published = document.getElementById('published');
+        published.innerText = publishedPosts.length.toString();
+    }
+
+    function removePost(index) {
+        anime({
+            targets: `.row-${index}`,
+            opacity: [1,0],
+            duration: 1000,
+            easing: 'linear',
+            complete: function () {
+                removedPosts.push(posts[index])
+                updateRemovedPosts();
+                posts.splice(index, 1);
+                renderTablePosts();
+            }
+        })
+    }
+
+    function updateRemovedPosts() {
+        let ol = document.getElementById('links');
+        ol.innerHTML = ``;
+        let string = ``;
+        removedPosts.forEach(post => {
+            string += `<li>${post.postLink}</li>`
+        })
+        ol.innerHTML = string;
+    }
+
+    console.log()
+
+</script>
+</html>

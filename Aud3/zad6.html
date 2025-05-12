@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z6</title>
+    <script>
+        const truncate = (str, index, character) =>{
+            if(index===undefined){
+                index = 0;
+            }
+            if(character === undefined){
+                character = '...';
+            }
+
+            return str.slice(0,index) + character;
+        }
+
+        console.log(truncate("Hello Worlds, Heeeeyaaaaa", 10, '!'));
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

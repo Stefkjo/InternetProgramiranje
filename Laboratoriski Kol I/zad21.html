@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z21</title>
+</head>
+<body>
+</body>
+<script>
+
+    let longestWord = ''
+    let maxLength = 0;
+    for(let i = 0;i<3;i++){
+        let newLine = prompt("Vnesi recenica: ");
+        let words = newLine.split(" ");
+        words.forEach(word => {
+            if(word.length>maxLength){
+                maxLength = word.length;
+                longestWord = word;
+            }
+        })
+    }
+    alert(longestWord);
+
+
+</script>
+</html>

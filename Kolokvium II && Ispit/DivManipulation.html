@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manipulation</title>
+</head>
+<body>
+<div><input id="input" type="text"><button onclick="addElement()">Постави</button></div>
+<div id="element-container"></div>
+</body>
+<script>
+
+   let counter = 0;
+
+   function addElement(){
+       let input = document.getElementById('input').value;
+       let styles = input.split(',');
+
+       let newEle = document.createElement('div');
+       newEle.style.textAlign = 'center';
+       newEle.style.backgroundColor = styles[0];
+       newEle.style.width = styles[1]+'px';
+       newEle.style.height = styles[2]+'px';
+       newEle.setAttribute('onclick', 'removeDiv(this)');
+       let text = styles[3];
+       if(counter%2===0){
+           newEle.innerText = text;
+       }else{
+           newEle.innerText = text.toUpperCase();
+       }
+
+       let container = document.getElementById('element-container');
+       container.appendChild(newEle);
+   }
+
+   function removeDiv(div){
+       div.remove();
+   }
+
+</script>
+</html>

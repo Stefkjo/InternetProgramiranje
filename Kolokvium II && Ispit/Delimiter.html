@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delimiter</title>
+</head>
+<style>
+    button{
+        margin-top: 20px;
+    }
+    .card{
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+    }
+</style>
+<body>
+<div id="input-form">
+    <h3>Colors</h3>
+    <div><input id="colors" type="text"></div>
+    <h3>Delimiter</h3>
+    <div><input id="del" type="text"></div>
+    <button onclick="drawColors()">Draw</button>
+</div>
+<div id="card-container"></div>
+</body>
+<script>
+    let colors = [];
+    function drawColors(){
+
+        let string = document.getElementById('colors').value;
+        let delimiter = document.getElementById('del').value;
+
+        if(string==='' || delimiter===''){
+            alert("Popolnete gi site input polinja!");
+            return
+        }
+
+        colors = string.split(delimiter);
+
+        renderCards();
+    }
+
+    function renderCards(){
+        let container = document.getElementById('card-container');
+        let cardString = '';
+        colors.forEach(color => {
+            let cardDiv = `<div class="card" onclick="removeCard(this)" style="background-color: ${color}"></div>`
+            cardString += cardDiv;
+        })
+        container.innerHTML = cardString;
+    }
+
+    function removeCard(card){
+        let removedColor = card.style.backgroundColor;
+        colors = colors.filter(color => color!==removedColor);
+        renderCards();
+        let delimiter = document.getElementById('del').value;
+        let input_string = colors.join(delimiter);
+        let string = document.getElementById('colors');
+        string.value = input_string;
+    }
+
+
+
+
+
+
+
+</script>
+</html>

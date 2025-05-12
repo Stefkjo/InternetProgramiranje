@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z18</title>
+</head>
+<body>
+</body>
+<script>
+
+    let inputLine = prompt("Внеси реченица: ");
+    let inputParts = inputLine.split(" ");
+    inputParts.reverse();
+    for (let i = 0; i < inputParts.length; i++) {
+        inputParts[i].toLowerCase();
+        inputParts[i][0].toUpperCase()
+    }
+    alert(inputParts.join(" "));
+
+</script>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z3</title>
+    <script>
+
+
+        let addF = (arr) =>{
+            let rez = [];
+            for (let i = 0; i < inputLine.length-1; i++) {
+                if(inputLine[i]%2===0 && inputLine[i+1]%2===0){
+                    rez.push(inputLine[i]);
+                    rez.push("-");
+                }else{
+                    rez.push(inputLine[i]);
+                }
+            }
+
+            rez.push(inputLine[inputLine.length-1]);
+
+            return rez;
+        }
+
+        let inputLine = prompt("Enter a number");
+
+        document.write(addF(inputLine).join(""));
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

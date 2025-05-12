@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pravoagolnici</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #container {
+            display: inline-block;
+            border: 1px solid black;
+            width: 800px;
+            height: 600px;
+        }
+
+        p {
+            display: inline-block;
+            vertical-align: top;
+            font-size: 20px;
+        }
+
+        .pravoagolnik {
+            display: inline-block;
+            position: absolute;
+            border: 1px solid black;
+        }
+        #strike{
+            width: 3px;
+            height: 600px;
+            border: 1px solid black;
+            position: absolute;
+            display: inline-block;
+            background: black;
+        }
+    </style>
+
+</head>
+<body>
+<div id="container"></div>
+<p>Poeni: <span id="points">0</span></p>
+</body>
+<script>
+
+    fetch('https://webhook.site/c882f1da-c0a3-4ee5-89ed-aa8e4df80b8c')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(rect => {
+                let newRect = `<div id="${rect.id}" class="pravoagolnik" style="width: ${rect.width}; height: ${rect.height}; left:${rect.left}px; top:${rect.top}px; background: ${rect.color};" poeni="${rect.score}" direction="${rect.dir}" pravec="0"></div>`
+                document.getElementById('container').innerHTML += newRect;
+            })
+            document.getElementById('container').innerHTML += `<div id="strike" style="display: none"></div>`;
+
+            moveRect()
+        })
+
+    let counter = 0;
+    let poeni = 0;
+    let repeats = 0;
+
+    function moveRect() {
+        let pravoagolnici = document.getElementsByClassName('pravoagolnik');
+        counter++;
+        for (let i = 0; i < pravoagolnici.length; i++) {
+            let top = parseInt(pravoagolnici[i].style.top.split('px')[0])
+            if (pravoagolnici[i].getAttribute('direction') === 'vertical') {
+                if (pravoagolnici[i].getAttribute('pravec') === '0') {
+                    top -= 5
+                    if (top <= 0) {
+                        pravoagolnici[i].setAttribute('pravec', '1')
+                    }
+                } else {
+                    top += 5
+                    let height = parseInt(pravoagolnici[i].style.top.split('px')[0]) + parseInt(pravoagolnici[i].style.height.split('px')[0])
+                    if (height >= 600) {
+                        pravoagolnici[i].setAttribute('pravec', '0')
+                    }
+                }
+                pravoagolnici[i].style.top = top + 'px'
+            } else {
+                let left = parseInt(pravoagolnici[i].style.left.split('px')[0])
+                if (pravoagolnici[i].getAttribute('pravec') === '0') {
+                    left += 5
+                    let shirina = parseInt(pravoagolnici[i].style.left.split('px')[0]) + parseInt(pravoagolnici[i].style.width.split('px')[0])
+                    if (shirina>= 800) {
+                        pravoagolnici[i].setAttribute('pravec', '1')
+                    }
+                } else {
+                    left -= 5
+                    if (left <= 0) {
+                        pravoagolnici[i].setAttribute('pravec', '0')
+                    }
+                }
+                pravoagolnici[i].style.left = left + 'px'
+
+            }
+        }
+        if (counter > 50) {
+            counter = 0;
+            strike()
+        }else{
+            setTimeout(moveRect, 50);
+        }
+    }
+
+
+ function  strike(){
+        repeats++;
+        let randomX = parseInt(Math.random()*800)
+        let line = document.getElementById('strike');
+        line.style.display = '';
+        line.style.left = randomX+'px';
+        //proverka
+
+        if(repeats<3){
+            setTimeout(returnStrike,1000)
+            setTimeout(moveRect,1500)
+        }else{
+            returnStrike()
+        }
+    }
+
+
+  function returnStrike(){
+      let line = document.getElementById('strike');
+      line.style.display = 'none';
+      line.style.left = '-100px';
+  }
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z25</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt('Enter string: ');
+    let data = inputLine.split(';');
+    let runners = [];
+
+    data.forEach(person =>{
+        let parts = person.split(',');
+        let timings = []
+        for(let i = 3;i<parts.length;i++){
+            timings.push(parts[i])
+        }
+        let runner = {
+            id: parts[0],
+            name: parts[1],
+            surname: parts[2],
+            times: timings
+        }
+        runners.push(runner);
+    })
+    let bestAVGIndex = 0;
+    let bestAVG = 9999999;
+    for(let i = 0;i<runners.length;i++){
+        let avg = 0;
+        for(let time of runners[i].times){
+                avg+=parseInt(time)
+        }
+        avg = avg/runners[i].times.length
+        if(avg<bestAVG){
+            bestAVG = avg;
+            bestAVGIndex = i;
+        }
+    }
+
+    console.log(runners[bestAVGIndex].name, runners[bestAVGIndex].surname)
+
+</script>
+</html>

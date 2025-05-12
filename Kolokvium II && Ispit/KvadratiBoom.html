@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boom</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        #display {
+            width: 800px;
+            height: 800px;
+            background-color: aliceblue;
+            overflow: hidden;
+        }
+
+        .cube {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="display"></div>
+</body>
+<script>
+    let data = `[{"color":"red", "size":"50"},
+        {"color":"blue", "size":"40"},
+        {"color":"orange", "size":"30"},
+        {"color":"green", "size":"20"},
+        {"color":"yellow", "size":"50"}]`
+
+    let cubes = JSON.parse(data);
+
+    cubes.forEach(cube => {
+        let cubeEl = document.createElement('div');
+        cubeEl.classList.add('cube');
+        cubeEl.setAttribute('onclick', 'explode(this)');
+        cubeEl.style.backgroundColor = cube.color;
+        cubeEl.style.width = cube.size + 'px';
+        cubeEl.style.height = cube.size + 'px';
+
+        let randomX = Math.floor(Math.random() * 700 + 1);
+        let randomY = Math.floor(Math.random() * 700 + 1);
+        console.log(randomY, randomX)
+        cubeEl.style.left = `${randomX}px`
+        cubeEl.style.top = `${randomY}px`
+
+        document.getElementById('display').appendChild(cubeEl);
+    })
+
+    function explode(cube) {
+        anime({
+            targets: cube,
+            scale: [1, 3],
+            duration: 2000,
+            easing: 'linear',
+            complete: function () {
+                multiply(cube);
+                cube.remove()
+            },
+        })
+    }
+
+
+    function multiply(cube) {
+        for (let i = 0; i < 4; i++) {
+            let newCube = document.createElement('div');
+            newCube.style.backgroundColor = cube.style.backgroundColor;
+            newCube.style.position = 'absolute';
+            newCube.setAttribute('onclick', 'explode(this)');
+            newCube.style.height = '20px'
+            newCube.style.width = '20px'
+            if (i === 0) {
+                newCube.style.left = (parseInt(cube.style.left.split('px')[0]) - 45) + 'px';
+                newCube.style.top = (parseInt(cube.style.left.split('px')[0]) + 45) + 'px';
+            }
+            if (i === 1) {
+                newCube.style.left = (parseInt(cube.style.left.split('px')[0]) - 45) + 'px';
+                newCube.style.top = (parseInt(cube.style.left.split('px')[0]) + 70) + 'px';
+            }
+            if (i === 2) {
+                newCube.style.left = (parseInt(cube.style.left.split('px')[0]) - 20) + 'px';
+                newCube.style.top = (parseInt(cube.style.left.split('px')[0]) + 45) + 'px';
+            }
+            if (i === 3) {
+                newCube.style.left = (parseInt(cube.style.left.split('px')[0]) - 20) + 'px';
+                newCube.style.top = (parseInt(cube.style.left.split('px')[0]) + 70) + 'px';
+            }
+            document.getElementById('display').appendChild(newCube);
+        }
+    }
+
+
+</script>
+</html>

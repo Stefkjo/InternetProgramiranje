@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NumManipulation1</title>
+</head>
+<style>
+    #input-container {
+        display: flex;
+        gap: 5px;
+    }
+</style>
+<body>
+<div>
+    <div id="input-container"><input id="number" type="text">
+        <button onclick="shiftLeft()"><</button>
+        <button onclick="shiftRight()">></button>
+        <button onclick="convertNum()">CONVERT</button>
+        <button onclick="storeNum()">STORE</button>
+        <button onclick="checkNum()">CHECK</button>
+    </div>
+    <p id="perfect"></p>
+</div>
+<ul id="stored-nums">
+
+</ul>
+</body>
+<script>
+    let stored = []
+
+    function shiftLeft() {
+        let number = document.getElementById('number').value;
+        let firstNumbers = number.slice(0, 2);
+        let restNumbers = number.slice(2);
+        document.getElementById('number').value = restNumbers + firstNumbers;
+        resetPerfect();
+
+    }
+
+    function shiftRight() {
+        let number = document.getElementById('number').value;
+        console.log(number);
+        let lastNumbers = number.slice(8, 10);
+        let restNumbers = number.slice(0, 8);
+        document.getElementById('number').value = lastNumbers + restNumbers;
+        resetPerfect();
+    }
+
+    function convertNum() {
+        let newNumber = '';
+        let digits = document.getElementById('number').value.split('');
+        digits.forEach(digit => {
+            if (parseInt(digit) - 2 >= 0) {
+                newNumber += (parseInt(digit) - 2) + '';
+            } else {
+                newNumber += parseInt(digit)+8+'';
+            }
+
+        })
+
+        document.getElementById('number').value = newNumber;
+    }
+
+    function storeNum() {
+        let number = document.getElementById('number').value;
+        stored.push(number);
+        renderList();
+        resetPerfect();
+    }
+
+    function checkNum() {
+        let number = document.getElementById('number').value;
+        let digits = number.split('');
+        let counter = 0;
+        digits.forEach(digit => {
+            if (digit % 3 === 0) {
+                counter++;
+            }
+        })
+        if (counter >= 3) {
+            let perfect = document.getElementById('perfect');
+            perfect.style.fontSize = '20px';
+            perfect.style.color = 'lightgreen';
+            perfect.innerText = 'Perfect number!';
+        }
+    }
+
+    function renderList() {
+        let list = document.getElementById('stored-nums');
+        let string = ''
+        stored.forEach(num => {
+            let newLi = `<li>${num}</li>`
+            string += newLi;
+        })
+        list.innerHTML = string;
+    }
+
+    function resetPerfect() {
+        let perfect = document.getElementById('perfect');
+        perfect.innerText = '';
+    }
+</script>
+</html>

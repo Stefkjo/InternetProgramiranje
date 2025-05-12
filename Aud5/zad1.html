@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset=utf-8/>
+    <title>Z1</title>
+    <style>
+        .changeStyle {
+            font-size: 30px;
+            font-family: "DejaVu Sans Light", sans-serif;
+            color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+<p id='text'>Change my style</p>
+<div>
+    <button id="jsstyle" onclick="applyStyle()">Style</button>
+</div>
+
+<script>
+
+    function applyStyle() {
+        let pElement = document.getElementById('text');
+        pElement.setAttribute('class', 'changeStyle');
+    }
+
+</script>
+
+
+</body>
+</html>

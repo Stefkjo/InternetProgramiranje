@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z10</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt("Внеси го мобилниот број: ");
+    let input = inputLine.toString();
+    let phoneNumber = input.slice(0, 3) + "/" + input.slice(3, 6) + "-" + input.slice(6);
+    if (input.slice(0, 3) === '070' || input.slice(0, 3) === '071' || input.slice(0, 3) === '072') {
+        alert(phoneNumber + " - Telekom");
+    }
+    if (inputLine.slice(0, 3) === '073') {
+        alert(phoneNumber + " - MTEL");
+    }
+    if (inputLine.slice(0, 3) === '074') {
+        alert(phoneNumber + " - Telekabel");
+    }
+    if (inputLine.slice(0, 3) === '075' || inputLine.slice(0, 3) === '076' || inputLine.slice(0, 3) === '077' || inputLine.slice(0, 3) === '078') {
+        alert(phoneNumber + " - A1");
+    }
+    if (inputLine.slice(0, 3) === '079') {
+        alert(phoneNumber + " - LajkaMobile");
+    }
+</script>
+</html>

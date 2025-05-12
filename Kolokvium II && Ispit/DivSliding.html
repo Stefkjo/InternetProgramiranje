@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sliding</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<style>
+    button {
+        padding: 5px 15px;
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+<div id="button-container">
+    <button onclick="moveLeft()"><</button>
+    <button onclick="moveRight()">></button>
+</div>
+<div id="div-container"></div>
+</body>
+<script>
+    let data = [
+        {"background-color": "red", "width": "100px", "height": "100px"},
+        {"background-color": "green", "width": "50px", "height": "100px"},
+        {"background-color": "blue", "width": "100px", "height": "50px"}
+    ]
+
+
+    let elements = []
+
+    data.forEach(data => {
+        let divElement = document.createElement('div');
+        divElement.style.backgroundColor = data["background-color"];
+        divElement.style.width = data.width;
+        divElement.style.height = data.height;
+        elements.push(divElement);
+    })
+
+    let container = document.getElementById('div-container');
+    container.append(elements[0]);
+
+    let currentIndex = 0;
+
+    function moveLeft() {
+        let currentElement = elements[currentIndex];
+        currentIndex = (currentIndex - 1 + elements.length) % elements.length;
+        let nextElement = elements[currentIndex];
+
+        let timeline = anime.timeline({
+            easing:'easeInOutSine',
+            duration:1500
+        });
+        timeline.add({
+            targets: currentElement,
+            translateX: -150,
+            complete: () => {
+                currentElement.remove();
+                container.append(nextElement);
+            }
+        })
+
+        timeline.add({
+            targets: nextElement,
+            translateX: [window.innerWidth, 0],
+        })
+    }
+
+    function moveRight() {
+        let currentElement = elements[currentIndex];
+        currentIndex = (currentIndex + 1) % elements.length;
+        let nextElement = elements[currentIndex];
+        console.log(currentElement, currentIndex);
+
+        let timeline = anime.timeline({
+            easing:'easeInOutSine',
+            duration:1500
+        });
+
+        timeline.add({
+            targets: currentElement,
+            translateX: window.innerWidth+100,
+            easing:'easeInOutSine',
+            complete: () =>{
+                currentElement.remove()
+                container.append(nextElement);
+            }
+        })
+        timeline.add({
+            targets: nextElement,
+            translateX: [-100,0],
+        })
+
+    }
+
+</script>
+</html>

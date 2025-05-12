@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+    <style>
+
+        #form-container {
+            width: 350px;
+        }
+
+        #search-container {
+            width: 450px;
+        }
+
+        #form-container > div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        #search-container > div {
+            height: 20px;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .movie-card {
+            display: inline-block;
+            margin-left: 10px;
+            margin-top: 10px;
+            width: 150px;
+            height: 150px;
+            text-align: center;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+<h1>Watch List</h1>
+<div id="form-container">
+    <div>Title: <input id="title" type="text"></div>
+    <div>Genre: <input id="genre" type="text"></div>
+    <div>Status: <input id="s1" type="radio">Watched <input id="s2" type="radio">Not Watched</div>
+    <div>Rating: <input id="rating" type="text"></div>
+</div>
+<button onclick="addMovie()">Add Movie</button>
+<hr>
+<div id="search-container">
+    <div>Filter: <select id="filter">
+        <option value="va">View all</option>
+        <option value="w">Watched</option>
+        <option value="nw">Not Watched</option>
+    </select>
+        <button onclick="filterMovies()">Filter</button>
+    </div>
+    <div>Search: <input id="search-genre" type="text">
+        <button onclick="searchMovies()">Search</button>
+        <p id="found-movies"></p></div>
+</div>
+<div id="movie-container">
+
+
+</div>
+</body>
+<script>
+
+    let movies = [];
+
+    function renderList(movies) {
+
+        let container = document.getElementById('movie-container');
+        let string = "";
+        let counter = 0;
+        movies.forEach(movie => {
+            if (movie.status === 'watched') {
+                string += `<div class="movie-card">
+                         <p>${movie.title}</p>
+                         <p>${movie.genre}</p>
+                         <p>${movie.rating}</p>
+                    </div>`
+                counter++;
+            } else {
+                string += `<div class="movie-card">
+                         <p>${movie.title}</p>
+                         <p>${movie.genre}</p>
+                         <button onclick="removeMovie(${counter})">Remove</button>
+                    </div>`
+                counter++;
+            }
+        })
+
+        container.innerHTML = string;
+
+    }
+
+    function removeMovie(index) {
+        movies.splice(index, 1);
+        renderList(movies);
+    }
+
+    function addMovie() {
+
+        let title = document.getElementById('title').value;
+        let genre = document.getElementById('genre').value;
+        let watched = document.getElementById('s1').checked;
+        let notWatched = document.getElementById('s2').checked;
+        let rating = document.getElementById('rating').value;
+        let status;
+        if (watched) {
+            status = 'watched'
+        } else {
+            status = 'notWatched'
+        }
+
+        let movie = {
+            title,
+            genre,
+            status,
+            rating
+        }
+
+        movies.push(movie);
+
+        document.getElementById('s1').checked = false;
+        document.getElementById('s2').checked = false;
+
+        renderList(movies);
+    }
+
+    function searchMovies() {
+        let searchGenre = document.getElementById('search-genre').value;
+        renderList(movies.filter(movie => movie.genre === searchGenre));
+        let found = document.getElementById('found-movies');
+        found.innerHTML = `${movies.filter(movie => movie.genre === searchGenre).length} ${searchGenre} movies found!`
+    }
+
+    function filterMovies() {
+        let filter = document.getElementById('filter').value;
+        if (filter === 'w') {
+            movies.sort((a, b) => parseInt(b.rating) - parseInt(a.rating));
+            renderList(movies.filter(movie => movie.status === 'watched'))
+        } else if (filter === 'nw') {
+            renderList(movies.filter(movie => movie.status === 'notWatched'))
+        } else {
+            renderList(movies);
+        }
+
+    }
+
+
+</script>
+</html>

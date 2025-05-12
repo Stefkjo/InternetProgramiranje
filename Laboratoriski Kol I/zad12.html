@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z12</title>
+</head>
+<body>
+</body>
+<script>
+    /*
+       Се внесува стринг преку prompt прозорец. Сите броеви
+       поголеми или еднакви од 32 кои се наоѓаат внатре во стрингот
+       да се заменат со соодветниот ASCII карактер.
+       Помош:
+       Функцијата која може да се користи за конверзија е String.fromCharCode()
+     */
+
+    let inputLine = prompt("Input: ");
+
+    let nums = inputLine.match(/[0-9]+/g);
+
+    nums = nums.map(num => String.fromCharCode(parseInt(num)));
+
+    inputLine = inputLine.replace(/[0-9]+/g, '*');
+
+    for(let i=0,j=0;i<inputLine.length;i++){
+
+        //console.log(inputLine[i], nums[j]);
+
+        if(inputLine.charAt(i)==='*'){
+            console.log(inputLine[i]);
+            inputLine[i] = nums[j];
+            console.log(inputLine[i]);
+            j++;
+        }
+    }
+
+
+</script>
+</html>

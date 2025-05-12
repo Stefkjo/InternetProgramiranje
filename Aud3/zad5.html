@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z5</title>
+    <script>
+        const insertAtIndex = (str1, str2, index) => {
+             if(typeof (index)== 'undefined'){
+                 index = 0;
+             }
+             if(typeof(str2)=='undefined'){
+                 str2='';
+             }
+             return str1.slice(0, index) + str2 + str1.slice(index);
+        }
+        console.log(insertAtIndex('We are doing some exercises ', 'JavaScript', 17));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

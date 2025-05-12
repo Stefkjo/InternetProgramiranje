@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z4</title>
+</head>
+<body>
+</body>
+<script>
+    /*
+    Да се напише програма во која преку тастатура се внесуваат
+    5 трицифрени броеви. Да се провери дали сите внесени податоци
+    се трицифрени броеви, доколку не се да се испечати соодветна порака.
+    Во alert прозорец да се прикажи бројот со најголемиот збир на цифрите.
+     */
+    let sumDigits = 0;
+    let maxNum = "";
+    for (let i = 1; i <= 5; i++) {
+        let input = prompt("Vnesete broj " + i);
+        if (input.length !== 3) {
+            alert("Tricifren broj!");
+        }
+        if ((parseInt(input[0]) + parseInt(input[1]) + parseInt(input[2])) > sumDigits) {
+            sumDigits = parseInt(input[0]) + parseInt(input[1]) + parseInt(input[2]);
+            maxNum = input;
+        }
+    }
+
+    alert("Brojot e: " + maxNum);
+
+</script>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z5</title>
+</head>
+<body>
+</body>
+<script>
+    /*
+      Да се напише програма каде
+      корисникот првично внесува krug или kvadrat.
+      Потоа соодветно за круг се внесува радиус, додека за квадрат се
+      внесува страна. Програмата треба да пресмета плоштина и периметар на
+      истите и притоа да испечати кое колку пати е поголемо.
+      Круг:
+      Периметар: 2*r*PI
+      Плоштина: r^2*PI
+      Квадрат:
+      Периметар: 4*а
+      Плоштина: a^2
+      Доколку се внесе нешто различно од krug или kvadrat да
+      се испечати дека влезот не е валиден.
+     */
+
+
+    let inputShape = prompt("Внесете форма: ");
+
+    if (inputShape !== 'krug' && inputShape !== 'kvadrat') {
+        alert("Invalid input!");
+    }
+
+    if (inputShape === "kvadrat") {
+        let squareSize = prompt("Внесете должина на страната: ");
+        let sL = 4 * parseInt(squareSize);
+        let sP = Math.pow(parseInt(squareSize), 2);
+        if (sL < sP) {
+            alert("Периметарот на квадратот е помал од плоштината за " + (sP / sL).toFixed(2));
+        } else if (sP < sL) {
+            alert("Периметарот на квадратот е помал од плоштината за " + (sL / sP).toFixed(2));
+        } else {
+            alert("Еднакви се");
+        }
+
+
+    }
+    if (inputShape === 'krug') {
+        let circleRadius = prompt("Внесете должина на радиусот на кругот: ");
+
+        let cL = 2 * (parseInt(circleRadius)) * Math.PI;
+        let cP = Math.PI * Math.pow(parseInt(circleRadius), 2);
+
+
+        if (cL < cP) {
+            alert("Периметарот на кругот е помал од плоштината за " + (cP / cL).toFixed(2));
+        } else if (cP < cL) {
+            alert("Периметарот на кругот е помал од плоштината за " + (cL / cP).toFixed(2));
+        } else {
+            alert("Еднакви се");
+        }
+    }
+
+
+</script>
+</html>

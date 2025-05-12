@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alien</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        #alien {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background: lightgreen;
+            border: 1px solid black;
+        }
+
+        #spaceship {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+            background: #4682B4;
+            border: 1px solid black;
+            top: 500px; /* Initial top position */
+            left: 50px;
+        }
+
+        .laser {
+            position: absolute;
+            width: 100px;
+            height: 20px;
+            background: red;
+            border: 1px solid black;
+            border-radius: 100%;
+        }
+
+        #controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<div id="alien"></div>
+<div id="spaceship"></div>
+<div id="controls">
+    <button onclick="shootLaser()">Shoot</button>
+    <button onclick="moveSpaceshipUp()">Up</button>
+    <button onclick="moveSpaceshipDown()">Down</button>
+</div>
+</body>
+<script>
+    const viewX = window.innerWidth;
+    const viewY = window.innerHeight;
+
+    let spaceshipY = 500; // Start Y position
+    const spaceship = document.getElementById('spaceship');
+
+    function moveSpaceshipUp() {
+        if (spaceshipY > 50) { // Prevent moving out of bounds
+            spaceshipY -= 20;
+            spaceship.style.top = `${spaceshipY}px`;
+        }
+    }
+
+    function moveSpaceshipDown() {
+        if (spaceshipY < viewY - 150) { // Prevent moving out of bounds
+            spaceshipY += 20;
+            spaceship.style.top = `${spaceshipY}px`;
+        }
+    }
+
+    function generateAlien() {
+        const randX = Math.random() * (viewX - 100);
+        const randY = Math.random() * (viewY - 200);
+        const alien = document.getElementById('alien');
+        alien.style.left = `${randX}px`;
+        alien.style.top = `${randY}px`;
+    }
+
+    function shootLaser() {
+        const laser = document.createElement('div');
+        laser.classList.add('laser');
+        document.body.appendChild(laser); // Append to body for independent positioning
+
+        const spaceshipRect = spaceship.getBoundingClientRect();
+        laser.style.left = `${spaceshipRect.left + spaceshipRect.width / 2 - 50}px`;
+        laser.style.top = `${spaceshipRect.top}px`;
+
+        anime({
+            targets: laser,
+            translateX: viewX - spaceshipRect.right,
+            duration: 3000,
+            easing: 'easeInOutQuad',
+            complete: () => laser.remove(), // Remove the laser after animation
+        });
+    }
+
+    window.onload = generateAlien;
+</script>
+</html>

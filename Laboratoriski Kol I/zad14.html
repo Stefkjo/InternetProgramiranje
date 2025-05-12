@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z14</title>
+</head>
+<body>
+</body>
+<script>
+    /*
+       Да се направи програма која од корисникот прима реченица.
+       Од реченицата треба да се отстранат сите знаци кои не се
+       букви или празни места.
+       Потоа од истата реченица треба да се отстранат сите дупликат
+        букви и истата да се прикаже на екранот.
+        Th3 quick b6own fOx jumpS over the l@zy d0g!
+     */
+
+    let inputLine = prompt("Vnesi rechenica: ");
+
+    inputLine = inputLine.replaceAll(/[^a-zA-Z ]+/g, "");
+    let rez = "";
+
+    for(let i = 0,j=0;i<inputLine.length;i++){
+
+        if(rez.indexOf(inputLine[i])===-1 || inputLine[i]===" "){
+            rez+=inputLine[i];
+        }
+    }
+
+    console.log(rez);
+</script>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kocki-History-to-JSON</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <style>
+        .cube {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            border: 3px solid black;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 85px;
+        }
+
+        #history {
+            display: block;
+        }
+
+        input {
+            height: 27px;
+            width: 250px;
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 5px 15px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div><input id="guess" type="text">
+    <button onclick="rollDice()">Roll</button>
+</div>
+<div id="cube1" class="cube"></div>
+<div id="cube2" class="cube"></div>
+<button id="history" onclick="displayHistory()">History to json</button>
+</body>
+<script>
+    let inputLine = document.getElementById('guess');
+    let jsonArray = [];
+    function rollDice() {
+
+        let cubeOne = document.getElementById('cube1');
+        let cubeTwo = document.getElementById('cube2');
+        inputLine.style.backgroundColor = 'white'
+        anime({
+            targets: [cubeOne, cubeTwo],
+            duration:1500,
+            easing: 'linear',
+            update: function(){
+                cubeTwo.innerText = getRandomNumber();
+                cubeOne.innerText = getRandomNumber();
+            },
+            complete: function(){
+                cubeOne.innerText = getRandomNumber();
+                cubeTwo.innerText = getRandomNumber();
+                checkCubes(parseInt(cubeOne.innerText), parseInt(cubeTwo.innerText))
+            }
+        })
+    }
+
+    function getRandomNumber(){
+        return Math.floor(Math.random()*6)+1;
+    }
+
+    function checkCubes(num1, num2){
+        let number = parseInt(document.getElementById('guess').value);
+
+        if(number===(num1+num2)){
+            inputLine.style.backgroundColor = 'green'
+        }else{
+            inputLine.style.backgroundColor = 'red'
+        }
+
+        jsonArray.push(JSON.stringify(
+            {
+                input: number,
+                dices: [num1,num2]
+            }
+        ))
+    }
+
+
+    function displayHistory(){
+        let alertString = '['
+        alertString += jsonArray;
+        alertString += ']';
+        alert(alertString);
+    }
+</script>
+</html>

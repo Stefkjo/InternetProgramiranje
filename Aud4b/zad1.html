@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z1</title>
+    <script>
+
+        let getAttributes = (obj) =>{
+            let res = [];
+            res.push(obj.name);
+            res.push(obj.sclass);
+            res.push(obj.rollno);
+
+            return res.join();
+        }
+
+        let student = {
+            name: "Stefan",
+            sclass: "VI",
+            rollno: 12
+        };
+
+        document.write(getAttributes(student));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

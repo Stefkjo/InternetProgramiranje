@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z23</title>
+</head>
+<body>
+</body>
+<script>
+    let users = []
+    let newLine = prompt('Vnesi korisnik: ')
+    while(newLine!=='*'){
+        let parts = newLine.split(' ')
+        let user = {
+            name: parts[0],
+            surname: parts[1],
+            email: parts[2],
+            phone: parts[3]
+        }
+        users.push(user);
+        newLine = prompt('Vnesi korisnik: ');
+    }
+
+    users = users.filter(user => user.phone.slice(0,3)==='073')
+    console.log(JSON.stringify(users));
+
+</script>
+</html>

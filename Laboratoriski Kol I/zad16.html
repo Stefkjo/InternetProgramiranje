@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z16</title>
+</head>
+<body>
+</body>
+<script>
+    /*
+    Да се напише програма која во еден prompt зема 2 збора
+    (оделени со празно место). Потребно е да се провери дали
+    тие 2 збора ги содржат истите букви. Ако ги содржат
+    истите букви да се испечати: „No differences found“ во
+    спротивно да се испечатат кои букви од кој збор се разликуваат.
+     */
+
+    let inputLine = prompt("Enter two words separated by a space: ");
+    let wordPars = inputLine.split(" ");
+    let wordA = wordPars[0];
+    let wordB = wordPars[1];
+    let finalFlag = true;
+    for(let i = 0;i<wordA.length;i++){
+        let flag = false;
+        for(let j = 0;j<wordB.length;j++){
+            if(wordA[i]===wordB[j]){
+                flag= true;
+            }
+        }
+        if(!flag){
+            alert("Difference found");
+            finalFlag=false;
+            break;
+        }
+    }
+    if(finalFlag){
+        alert("No difference found");
+    }
+
+
+</script>
+</html>

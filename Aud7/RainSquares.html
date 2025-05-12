@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RS</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<style>
+    body {
+        position: relative;
+        margin: 0;
+        overflow: hidden;
+        height: 1000vh;
+    }
+
+    .square {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        margin: 5px 10px;
+    }
+</style>
+<body>
+<button onclick="generateSquares()">Generate</button>
+<button onclick="resetPage()">Reset</button>
+</body>
+<script>
+
+    let colors = ["green", "yellow", "red", "purple", "gray", "pink", "blue"];
+
+
+    function generateSquares() {
+
+        let numOfSquares = Math.round(Math.random() * 10);
+        const viewportHeight = window.innerHeight;
+
+
+        for (let i = 0; i < numOfSquares; i++) {
+            let squareEl = document.createElement('div');
+            squareEl.classList.add('square');
+
+            const randomX = Math.random() * window.innerWidth;
+            const randomY = Math.random() * window.innerHeight;
+
+            let colorSquare = colors[Math.round(Math.random() * 7)];
+
+            squareEl.style.left = `${randomX}px`;
+            squareEl.style.top = `${randomY}px`;
+            squareEl.style.background = `${colorSquare}`;
+
+            document.body.appendChild(squareEl);
+        }
+
+        anime({
+            targets: '.square',
+            translateY: viewportHeight + 100,
+            easing: 'easeInOutQuad',
+            duration: 5000,
+            opacity: 0,
+            loop: true
+        })
+
+    }
+
+    function resetPage() {
+        let squares = Array.from(document.querySelectorAll('.square'));
+
+        squares.forEach(s => {
+            const rect = s.getBoundingClientRect();
+            const opacity = window.getComputedStyle(s).opacity;
+
+            if (rect.bottom > 0 && rect.top < window.innerHeight && opacity > 0) {
+                s.remove();
+            }
+        });
+    }
+
+</script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z4</title>
+    <style>
+        label{
+            width: 100px;
+            display: inline-block;
+        }
+        div{
+            margin-bottom: 10px;
+        }
+        button{
+            width: 270px;
+        }
+        select{
+            width: 170px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div><label>Number of elements:</label><input type="text" id="numberButtons"></div>
+
+    <div><label>Type</label><select id="typeOfBtn">
+        <option value="Checkbox">Checkbox</option>
+        <option value="Radio">Radio</option>
+    </select></div>
+
+    <div>
+        <button id="addButton" onclick="addButtons()">Add</button>
+    </div>
+    <div id="buttonContainer">
+
+    </div>
+</body>
+<script>
+
+    function addButtons(){
+        let divElement = document.getElementById('buttonContainer');
+
+        let n = parseInt(document.getElementById('numberButtons').value);
+        let type = document.getElementById('typeOfBtn').value;
+
+        //console.log(n, type);
+
+
+        for(let i = 0; i<n ;i++){
+            let inputElement = document.createElement('input');
+            let text = document.createTextNode(i.toString());
+            if(type==="Checkbox"){
+                inputElement.setAttribute('type', 'checkbox');
+            }else if(type==="Radio"){
+                inputElement.setAttribute('type', 'radio');
+            }
+            console.log(i);
+            divElement.appendChild(inputElement);
+            divElement.appendChild(text);
+        }
+
+       document.getElementById('numberButtons').value = "";
+    }
+
+
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z11</title>
+</head>
+<body>
+</body>
+<script>
+    /*
+    Да се направи веб страна каде од тастатура (преку prompt) последователно
+     се читаат 3 броја и стринг („MEDIAN“, „MEAN“) во зависност од тоа
+    дали сакаме да пресметаме медијана или мода (средна вредност) на трите броја
+     */
+
+    let numA = prompt("Vnesi broj: ");
+    let numB = prompt("Vnesi broj: ");
+    let numC = prompt("Vnesi broj: ");
+
+    let inputLine = prompt("Vnesi tip:");
+
+    if (inputLine !== 'MEDIAN' && inputLine !== 'MEAN') {
+        alert("Invalid input!");
+    }
+
+    if (inputLine === 'MEDIAN') {
+        alert(numB);
+    }
+    if (inputLine === 'MEAN') {
+        alert(((numA + numB + numC) / 3).toFixed(2))
+    }
+
+
+
+</script>
+</html>

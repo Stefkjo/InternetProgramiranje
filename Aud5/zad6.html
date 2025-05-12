@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z6</title>
+    <style type="text/css">
+        body {
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+<form>
+    Select your favorite Color :
+    <select id="mySelect">
+        <option>Red</option>
+        <option>Green</option>
+        <option>Blue</option>
+        <option>White</option>
+    </select>
+    <input type="button" onclick="getOptions()" value="Count and Output all
+items">
+</form>
+</body>
+
+<script>
+
+    function getOptions(){
+
+        let selectElement = document.getElementById('mySelect');
+        let options = [];
+        options = selectElement.children;
+        console.log(options.length);
+        let res = "";
+        for(let option of options){
+            res+=option.innerText;
+            res+=" ";
+        }
+        console.log(res);
+
+    }
+
+</script>
+
+</html>

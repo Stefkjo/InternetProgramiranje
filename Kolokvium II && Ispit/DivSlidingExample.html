@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sliding</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <style>
+        button {
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<button onclick="moveElementsLeft()"><</button>
+<button onclick="moveElementsRight()">></button>
+
+</body>
+<script>
+    data = '[{"background-color":"red", "width":"100px", "height":"100px"}, ' +
+        '{"background-color":"green", "width":"50px", "height":"100px"}, ' +
+        '{"background-color":"blue", "width":"100px", "height":"50px"},' +
+        '{"background-color":"yellow", "width":"200px", "height":"200px"},' +
+        '{"background-color":"orange", "width":"150px", "height":"150px"}]';
+    let elements = JSON.parse(data);
+    let divs = []
+    elements.forEach(el => {
+        let div = document.createElement('div')
+        div.style.backgroundColor = el['background-color']
+        div.style.width = el['width']
+        div.style.height = el['height']
+        divs.push(div);
+    })
+
+    let currentIndex = 0;
+    document.body.appendChild(divs[currentIndex]);
+
+    function moveElementsRight() {
+        let currentElement = divs[currentIndex];
+        currentIndex = (currentIndex + 1) % divs.length;
+        let newElement = divs[currentIndex];
+
+        let timeline = anime.timeline({
+            duration: 1500,
+            easing: 'linear'
+        })
+        timeline.add({
+            targets: currentElement,
+            translateX: window.innerHeight + 100,
+            complete: function () {
+                currentElement.remove();
+                document.body.appendChild(newElement);
+            }
+        })
+
+        timeline.add({
+            targets: newElement,
+            translateX: [-200, 0],
+        })
+    }
+
+    function moveElementsLeft() {
+        let currentElement = divs[currentIndex];
+        currentIndex = (currentIndex - 1 + divs.length) % divs.length;
+        let newElement = divs[currentIndex];
+
+        let timeline = anime.timeline({
+            duration: 1500,
+            easing: 'linear'
+        })
+        timeline.add({
+            targets: currentElement,
+            translateX: -200,
+            complete: function () {
+                currentElement.remove();
+                document.body.appendChild(newElement);
+            }
+        })
+
+        timeline.add({
+            targets: newElement,
+            translateX: [window.innerWidth + 200, 0],
+        })
+    }
+
+</script>
+</html>
