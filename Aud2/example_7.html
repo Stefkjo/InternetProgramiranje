@@ -1,0 +1,27 @@
+<!--Write a program that for unknown number of integers read-->
+<!--from SI will find the number with maximum value among-->
+<!--them. The program stops when you enter “!”.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 7</title>
+</head>
+<body>
+</body>
+<script>
+    let max = 0;
+    while (true) {
+        let n = prompt("");
+        if (n === '!') {
+            break;
+        }
+        n = parseInt(n);
+        if (n > max) {
+            max = n;
+        }
+    }
+
+    document.write(`Max value number ${max}`);
+</script>
+</html>

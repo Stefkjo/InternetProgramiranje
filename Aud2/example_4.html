@@ -1,0 +1,36 @@
+<!--Write a program that will generate and print the-->
+<!--grade according to the following table:-->
+<!--0-50   -> 5-->
+<!--51-60  -> 6-->
+<!--61-70  -> 7-->
+<!--71-80  -> 8-->
+<!--81-90  -> 9-->
+<!--91-100  -> 10-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 4</title>
+</head>
+<body>
+</body>
+<script>
+    let points = prompt("Enter the points:")
+
+    points = parseInt(points);
+
+    if (points <= 50) {
+        document.write("Grade 5");
+    } else if (points >= 51 && points <= 60) {
+        document.write("Grade 6");
+    } else if (points >= 61 && points <= 70) {
+        document.write("Grade 7");
+    } else if (points >= 71 && points <= 80) {
+        document.write("Grade 8");
+    } else if (points >= 81 && points <= 90) {
+        document.write("Grade 9");
+    } else if (points >= 91 && points <= 100) {
+        document.write("Grade 10");
+    }
+</script>
+</html>

@@ -1,0 +1,33 @@
+<!--The coordinates of a point are read from SI. Write-->
+<!--a program that will print the quadrant or the axis-->
+<!--where the point belongs. If the point is in the-->
+<!--center, print an appropriate message.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 3</title>
+</head>
+<body>
+</body>
+<script>
+    let x = prompt("X:");
+    let y = prompt("Y:");
+
+    x = parseInt(x);
+    y = parseInt(y);
+
+    if (x > 0 && y > 0) {
+        document.write("First quadrant");
+    }
+    if (x < 0 && y < 0) {
+        document.write("Third quadrant");
+    }
+    if (x < 0 && y > 0) {
+        document.write("Second quadrant");
+    }
+    if (x > 0 && y < 0) {
+        document.write("Forth quadrant");
+    }
+</script>
+</html>

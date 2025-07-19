@@ -1,0 +1,33 @@
+<!--Write a program that for n numbers read from SI will count-->
+<!--the numbers divisible by 3,the ones that have residue 1-->
+<!--when divided by 3 and the ones that have residue 2.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+<script>
+    let n = prompt("Enter a number:");
+    let a = 0, b = 0, c = 0;
+    n = parseInt(n);
+    while (!isNaN(n)) {
+        if ((parseInt(n)) % 3 === 0) {
+            a++;
+        }
+        if ((parseInt(n)) % 3 === 1) {
+            b++;
+        }
+        if ((parseInt(n)) % 3 === 2) {
+            c++;
+        }
+        n = prompt();
+    }
+
+    document.write(`${a} numbers with residue 0 divided by 3<br>`);
+    document.write(`${b} numbers with residue 1 divided by 3<br>`);
+    document.write(`${c} numbers with residue 2 divided by 3<br>`);
+</script>
+</html>
