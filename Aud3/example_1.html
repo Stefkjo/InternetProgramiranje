@@ -1,0 +1,18 @@
+<!--Write a JavaScript function that will check if some data is a string or not.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 1</title>
+</head>
+<body>
+</body>
+<script>
+    function isString(input) {
+        return Object.prototype.toString.call(input) === '[object String]';
+    }
+
+    let input = prompt("");
+    document.write(isString(input) ? "The input is string." : "The input is not a string.")
+</script>
+</html>

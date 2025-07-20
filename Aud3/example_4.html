@@ -1,0 +1,19 @@
+<!--Write a JavaScript function which the first letter of given string will-->
+<!--make capital.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 4</title>
+</head>
+<body>
+</body>
+<script>
+    function makeFirstLetterCapital(word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    let input = prompt("Enter a word");
+    document.write(`${makeFirstLetterCapital(input)}`)
+</script>
+</html>

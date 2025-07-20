@@ -1,0 +1,27 @@
+<!--Write a JavaScript function that cuts a string if there are more than a-->
+<!--certain number of characters. The strings will end with „...“ or with-->
+<!--another specific string.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 6</title>
+</head>
+<body>
+</body>
+<script>
+    function textTruncate(input, position, replacement) {
+        let start = input.slice(0, position);
+        return replacement === null ? start + "..." : start + replacement;
+    }
+
+    let input = prompt("")
+    let replacement = prompt("");
+    let position = parseInt(prompt(""));
+
+    console.log(input)
+    console.log(replacement)
+    console.log(position)
+    document.write(`${textTruncate(input, position, replacement)}`)
+</script>
+</html>

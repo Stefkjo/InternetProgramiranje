@@ -1,0 +1,25 @@
+<!--Write a JavaScript function that will put one string into other in-->
+<!--specific position.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 5</title>
+</head>
+<body>
+</body>
+<script>
+    function insert(phrase, input, position) {
+        let start = phrase.slice(0, position);
+        let end = phrase.slice(position - 1);
+        return start + input + end;
+    }
+
+    let phrase = prompt("");
+    let input = prompt("");
+    let position = prompt("");
+    position = parseInt(position);
+
+    document.write(`${insert(phrase, input, position)}`)
+</script>
+</html>

@@ -1,0 +1,29 @@
+<!--Write a JavaScript function that for given string will-->
+<!--return the part before (a) or after (b) into char.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 8</title>
+</head>
+<body>
+</body>
+<script>
+    function subStrAfterChars(input, separator, char) {
+        if (char === 'a') {
+            let first = input.indexOf(separator);
+            return input.slice(0, first)
+        }
+        if (char === 'b') {
+            let first = input.indexOf(separator);
+            return input.slice(first + 1)
+        }
+    }
+
+    let input = prompt("")
+    let separator = prompt("")
+    let char = prompt("");
+
+    document.write(`${subStrAfterChars(input, separator, char)}`)
+</script>
+</html>
