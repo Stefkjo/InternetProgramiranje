@@ -1,0 +1,23 @@
+<!--Write a function background() which will set red background on the-->
+<!--paragraphs.-->
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset=utf-8/>
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="Click to set paragraph back
+ ground color" onclick="changeBackground()">
+<p>Paragraph 1</p>
+<p>Paragraph 2</p>
+</body>
+<script>
+    function changeBackground() {
+        let elements = document.getElementsByTagName('p');
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.background = 'red';
+        }
+    }
+</script>
+</html>

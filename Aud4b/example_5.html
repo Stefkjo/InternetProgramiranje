@@ -1,0 +1,25 @@
+<!--Write a JavaScript program that will calculate the perimeter and area-->
+<!--of a circle.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 5</title>
+</head>
+<body>
+</body>
+<script>
+    function getArea(radius) {
+        return Math.PI * Math.pow(radius, 2);
+    }
+
+    function getPerimeter(radius) {
+        return Math.PI * 2 * radius;
+    }
+
+    let radius = parseFloat(prompt("Enter the circle radius: "));
+
+    document.write(`Circle area is ${getArea(radius).toFixed(2)}<br>`);
+    document.write(`Circle perimeter is ${getPerimeter(radius).toFixed(2)}<br>`);
+</script>
+</html>

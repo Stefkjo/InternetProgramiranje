@@ -1,0 +1,24 @@
+<!--Write a function style() which will change the font, size and color of-->
+<!--the text in the paragraph.-->
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset=utf-8/>
+    <title>Title</title>
+</head>
+<body>
+<p id='text'>Change my style</p>
+<div>
+    <button id="jsstyle" onclick="styleText()">Style
+    </button>
+</div>
+</body>
+<script>
+    function styleText() {
+        let p = document.getElementById('text');
+        p.style.color = 'red';
+        p.style.fontSize = '24pt';
+        p.style.fontFamily = 'Comic Sans MS';
+    }
+</script>
+</html>

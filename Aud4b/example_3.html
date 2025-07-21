@@ -1,0 +1,31 @@
+<!--Write JavaScript program that in console will print the data for the-->
+<!--following objects (book, author and status).-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 3</title>
+</head>
+<body>
+</body>
+<script>
+    var library = [
+        {
+            author: 'Bill Gates',
+            title: 'The Road Ahead',
+            readingStatus: true
+        },
+        {
+            author: 'Steve Jobs',
+            title: 'Walter Isaacson',
+            readingStatus: true,
+        },
+        {
+            author: 'Suzanne Collins',
+            title: 'Mockingjay: The Final Book of The Hunger Games',
+            readingStatus: false,
+        }];
+
+    library.forEach(b => document.write(`${b.author} - ${b.title} - ${b.readingStatus}<br>`));
+</script>
+</html>

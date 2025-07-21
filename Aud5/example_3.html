@@ -1,0 +1,23 @@
+<!--Write a function getAttributes () which in the console will print href,-->
+<!--hrefflang, rel, target and type attributes on the link.-->
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset=utf-8/>
+    <title>Example 3</title>
+</head>
+<body>
+<p><a id="finki" type="text/html" hreflang="en
+us" rel="nofollow" target="_self" href="http://www.w3
+ resource.com/">finki</a></p>
+<button onclick="getAttributes()">Click here to get
+    attributes value
+</button>
+</body>
+<script>
+    function getAttributes() {
+        let link = document.getElementById('finki');
+        console.log(link.href + " " + link.hreflang + " " + link.rel + " " + link.type);
+    }
+</script>
+</html>

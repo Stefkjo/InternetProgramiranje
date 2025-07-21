@@ -1,0 +1,31 @@
+<!--Write a program in JavaScript that will set green color on the bold-->
+<!--text when the mouse is over-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 5</title>
+</head>
+<body>
+<p style="cursor: pointer" onmouseenter='highlightText()' onmouseleave="unHighlightText()">[On mouse over here bold words of the following paragraph will
+    be highlighted]</p>
+<p id="text"><b>We</b> have just started <b>this</b> section for the users (<b>beginner</b> to intermediate) who
+    <b>want</b> to work
+    with <b>various</b> JavaScript <b>problems</b> and write scripts online to <b>test</b> JavaScript <b>skill</b>.</p>
+</body>
+<script>
+    function highlightText() {
+        let p = document.getElementById('text').children;
+        for (let i = 0; i < p.length; i++) {
+            p[i].style.background = 'green';
+        }
+    }
+
+    function unHighlightText() {
+        let p = document.getElementById('text').children;
+        for (let i = 0; i < p.length; i++) {
+            p[i].style.background = '';
+        }
+    }
+</script>
+</html>

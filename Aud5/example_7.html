@@ -1,0 +1,33 @@
+<!--Make a web page that will calculate the volume of a sphere for given-->
+<!--radius.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 7</title>
+</head>
+<body>
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <p>Input radius value and get the volume of a sphere</p>
+    <div>
+        <form style="display: flex; flex-direction: column; gap: 10px;">
+            <label for="radius">Radius</label>
+            <input id="radius" type="number">
+            <label for="volume">Volume</label>
+            <input id="volume" placeholder="0.00" type="number">
+            <button id="calcBtn" onclick='calculateVolume()'>Calculate</button>
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    function calculateVolume() {
+        let input = document.getElementById('radius');
+        let radius = parseFloat(input.value);
+
+        let volume = document.getElementById('volume');
+        volume.value = `${(Math.PI * Math.pow(radius, 2)).toFixed(2)}`;
+        input.value = ''
+    }
+</script>
+</html>
