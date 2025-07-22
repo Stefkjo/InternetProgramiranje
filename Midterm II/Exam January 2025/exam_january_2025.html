@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam January</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<style>
+    .card {
+        width: 150px;
+        height: 200px;
+        border: 1px solid black;
+        border-radius: 10%;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .panel {
+        width: 50%;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<body>
+<div>
+    <div style="display: flex">
+        <div class="panel">
+            <h1>Start Game</h1>
+            <img src="1.png" alt="" id="elementImg" width="250" height="200" style="border:1px solid black">
+            <button style="margin-top: 30px" onclick="startGame()">START GAME</button>
+            <p id="picked_num"></p>
+        </div>
+        <div class="panel">
+            <h1>Show Stats</h1>
+            <button onclick="showStats()">Show Stats</button>
+            <div style="display: flex">
+                <div id="chart_1" style="width: 300px"></div>
+                <div id="chart_2" style="width: 300px"></div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <h1>Players</h1>
+        <div id="player-container"></div>
+    </div>
+</div>
+</body>
+<script>
+    let data = {
+        "players": [
+            {
+                "name": "Alice",
+                "nickname": "alice5",
+                "type": 1,
+                "amount": 150,
+                "symbol": "fire"
+            },
+            {
+                "name": "Bob",
+                "nickname": "bobster@",
+                "type": 3,
+                "amount": 200,
+                "symbol": "ice"
+            },
+            {
+                "name": "Charlie",
+                "nickname": "charli35",
+                "type": 2,
+                "amount": 300,
+                "symbol": "water"
+            },
+            {
+                "name": "Diana",
+                "nickname": "diana5",
+                "type": 4,
+                "amount": 250,
+                "symbol": "earth"
+            },
+            {
+                "name": "Evan",
+                "nickname": "evan5",
+                "type": 1,
+                "amount": 180,
+                "symbol": "fire"
+            },
+            {
+                "name": "Fiona",
+                "nickname": "fiona",
+                "type": 3,
+                "amount": 220,
+                "symbol": "ice"
+            },
+            {
+                "name": "George",
+                "nickname": "george",
+                "type": 2,
+                "amount": 400,
+                "symbol": "water"
+            },
+            {
+                "name": "Hannah",
+                "nickname": "hannah",
+                "type": 4,
+                "amount": 350,
+                "symbol": "earth"
+            },
+            {
+                "name": "Ian",
+                "nickname": "ian",
+                "type": 1,
+                "amount": 275,
+                "symbol": "fire"
+            },
+            {
+                "name": "Julia",
+                "nickname": "julia",
+                "type": 3,
+                "amount": 320,
+                "symbol": "ice"
+            },
+            {
+                "name": "Kevin",
+                "nickname": "kevin",
+                "type": 2,
+                "amount": 410,
+                "symbol": "water"
+            }
+        ]
+    };
+    let validPlayers = [];
+    let numsRolled = [0, 0, 0, 0];
+    let totalWins = [0, 0, 0, 0];
+
+    function randomColor() {
+        return (Math.random() * 255).toFixed(0);
+    }
+
+    function readCards() {
+        let players = data.players.filter(p => !p.nickname.includes('5') && !p.nickname.includes('@'));
+        validPlayers = players;
+        let playerContainer = document.getElementById('player-container');
+        let string = ``
+        players.forEach((p, i) => {
+            string += `<div class="card" style="background: rgb(${randomColor()},${randomColor()},${randomColor()}); text-align: center; margin: 10px">
+            <p>Name: ${p.name}</p>
+            <p>Nickname: ${p.nickname}</p>
+            <p>Amount: $${p.amount}</p>
+            <p>Type: ${p.type}</p>
+            <p class="${i}_plus"></p></div>`
+        });
+        playerContainer.innerHTML = string;
+    }
+
+    let lastPicked;
+
+    function startGame() {
+        let rollInterval = setInterval(function () {
+            lastPicked = Math.floor(Math.random() * 4) + 1;
+            let imageEl = document.getElementById('elementImg');
+            imageEl.src = lastPicked + '.png';
+        }, 50)
+
+        setTimeout(() => {
+            clearInterval(rollInterval);
+            let playerCards = document.querySelectorAll('.card');
+            playerCards.forEach((c, i) => {
+                if (c.children[3].innerHTML.split(':')[1].trim() === lastPicked.toString()) {
+                    c.children[4].innerHTML += '+';
+                    totalWins[lastPicked] += parseInt(validPlayers[i].amount);
+                }
+            })
+            numsRolled[lastPicked]++;
+            document.getElementById('picked_num').innerHTML = `Number picked ${lastPicked}`;
+        }, 1000)
+    }
+
+    function removeLosers() {
+        let playerCards = document.querySelectorAll('.card');
+        playerCards.forEach((c, i) => {
+            if (!c.children[4].innerHTML.includes('+')) {
+                c.remove();
+            }
+        })
+    }
+
+    function showStats() {
+        removeLosers();
+
+        let trace_1 = {
+            x: [1, 2, 3, 4],
+            y: numsRolled,
+            type: 'bar'
+        }
+        let layout_1 = {
+            title: 'Most picked'
+        }
+
+        Plotly.newPlot('chart_1', [trace_1], layout_1)
+
+        let trace_2 = {
+            x: [1, 2, 3, 4],
+            y: totalWins,
+            type: 'bar'
+        }
+        let layout_2 = {
+            title: 'Most winning'
+        }
+
+        Plotly.newPlot('chart_2', [trace_2], layout_2)
+
+    }
+
+    window.onload = function () {
+        readCards();
+        testAPI()
+    }
+</script>
+</html>

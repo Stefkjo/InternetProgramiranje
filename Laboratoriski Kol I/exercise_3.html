@@ -1,0 +1,35 @@
+<!--Да се напише програма која за броеви внесени од тастатура-->
+<!--ќе определи дали се прости или не. (прости броеви се деливи-->
+<!--само сами со себе и со бројот 1).-->
+<!--Потоа да се запише во документот дали секој број е прост или не.-->
+<!--Броевите се внесуваат се додека корисникот не внесе знак-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 3</title>
+</head>
+<body>
+</body>
+<script>
+    function isPrime(num) {
+        if (num <= 2) return false;
+        for (let i = 2; i < num; i++) {
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    let inputNum = prompt("Внеси број:");
+    while (inputNum !== '.') {
+        if (isPrime(parseInt(inputNum))) {
+            document.write(inputNum + ' е прост број' + "<br>");
+        } else {
+            document.write(inputNum + ' не е прост број' + "<br>");
+        }
+        inputNum = prompt("Внеси број:");
+    }
+</script>
+</html>

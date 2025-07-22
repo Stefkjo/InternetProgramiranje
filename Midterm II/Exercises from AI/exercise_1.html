@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 1</title>
+</head>
+<style>
+    .card {
+        width: 150px;
+        height: 350px;
+        background: cadetblue;
+        display: inline-block;
+        vertical-align: top;
+        border: 1px solid black;
+    }
+</style>
+<body>
+<div>
+    <div id="card-container" style="display: flex; flex-wrap: wrap"></div>
+</div>
+</body>
+<script>
+    let products = []
+
+    async function getProducts() {
+        let response = await fetch('https://fakestoreapi.com/products');
+        products = await response.json();
+        displayCards();
+    }
+
+    function displayCards() {
+        let container = document.getElementById('card-container');
+        let string = ``;
+        products.forEach(p => {
+            string += `<div class="card" style="display: flex; flex-direction: column; align-items: center; text-align: center">
+                        <p>Title: ${p.title}</p>
+                        <p>Price: ${p.price}$</p>
+                        <img src="${p.image}" width="80" height="80" style="vertical-align: bottom">
+                        </div>`
+        })
+        container.innerHTML = string;
+        console.log(container.innerHTML)
+    }
+
+    getProducts();
+</script>
+</html>
