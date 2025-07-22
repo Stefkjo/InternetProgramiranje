@@ -1,0 +1,44 @@
+<!--We need to make a web page for generating of checkbox/radio buttons. The number-->
+<!--of elements that need to be generated ins entered in a text field and type of element-->
+<!--to generate is selected from a drop-down list.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 4</title>
+</head>
+<body>
+<div>
+    <form style="display: flex; flex-direction: column; gap: 10px; width: 300px;">
+        <div style="display: flex; justify-content: space-between">
+            Number of elements:<label><input id="numEl" type="number"></label>
+        </div>
+        <div style="display: flex; justify-content: space-between">
+            Type:<label><select style="width: 140px" id="type">
+                <option value="checkbox">Checkbox</option>
+                <option value="radio">Radio</option>
+            </select></label>
+        </div>
+        <button style="width: 300px;" onclick="addButtons()">Add</button>
+    </form>
+</div>
+<div id="container">
+
+</div>
+</body>
+<script>
+    function addButtons(){
+        event.preventDefault();
+
+        let n = parseInt(document.getElementById('numEl').value);
+        let type = document.getElementById('type').value;
+        let divEl = document.createElement('div');
+        let string = ``;
+        for(let i = 0;i<n;i++){
+            string+=`${i+1}<input type="${type}">`
+        }
+        divEl.innerHTML = string;
+        document.getElementById('container').append(divEl);
+    }
+</script>
+</html>

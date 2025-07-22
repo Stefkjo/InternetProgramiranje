@@ -1,0 +1,88 @@
+<!--We will extend the previous task by displaying the total cost of projects in the table-->
+<!--and by adding a “Remove” button in each project (row). The total value of the projects-->
+<!--should be updated any time we add or remove a project.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 2</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div style="width: 300px">
+        <form style="display: flex; flex-direction: column; gap: 15px">
+            <h2>
+                Project details
+            </h2>
+            <div style="display: flex; justify-content: space-between;">
+                Author<label for="author"><input id="author"></label>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                Project<label for="project"><input id="project"></label>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                Cost<label for="cost"><input id="cost"></label>
+            </div>
+            <button style="width: 300px; padding: 5px" onclick="addProjectRow()">Add</button>
+        </form>
+    </div>
+    <h3>Project list - Total cost:<span id="total_cost">0</span></h3>
+    <div style="margin-top: 20px">
+        <table>
+            <thead>
+            <tr>
+                <th>Author</th>
+                <th>Project</th>
+                <th>Cost</th>
+            </tr>
+            </thead>
+            <tbody id="project-table-body">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    function addProjectRow() {
+        event.preventDefault();
+        let author = document.getElementById('author').value;
+        let project = document.getElementById('project').value;
+        let cost = parseFloat(document.getElementById('cost').value);
+        console.log(author)
+        console.log(project)
+        console.log(cost)
+
+        if (author === '' || project === '' || isNaN(cost)) {
+            alert("All fields must be filled!")
+        }
+
+        let table_body = document.getElementById('project-table-body');
+        let trEl = document.createElement('tr');
+        trEl.innerHTML = `<td>${author}</td><td>${project}</td><td>${cost}</td><td><button onclick="removeProjectRow(this)">Remove</button></td>`
+        table_body.insertAdjacentElement('beforeend', trEl);
+
+        let total_cost = parseFloat(document.getElementById('total_cost').innerText);
+        total_cost += cost;
+        document.getElementById('total_cost').innerHTML = `${total_cost}`;
+
+        document.getElementById('author').value = '';
+        document.getElementById('project').value = '';
+        document.getElementById('cost').value = '';
+    }
+
+    function removeProjectRow(button) {
+        let total_cost = parseFloat(document.getElementById('total_cost').innerText);
+        let cost = parseFloat(button.parentElement.parentElement.children[2].innerText);
+        total_cost -= cost;
+        document.getElementById('total_cost').innerHTML = `${total_cost}`;
+        button.parentElement.parentElement.remove();
+    }
+</script>
+</html>

@@ -1,0 +1,75 @@
+<!--We need to make a web page for managing data about projects. In the text fields enter-->
+<!--the name of the author, the project and the cost of the project. Upon clicking the add-->
+<!--button, we need to check if all three fields are filled (otherwise a message appears )-->
+<!--and, if they are a new entry is added to the table and the fields are reset.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 2</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div style="width: 300px">
+        <form style="display: flex; flex-direction: column; gap: 15px">
+            <h2>
+                Project details
+            </h2>
+            <div style="display: flex; justify-content: space-between;">
+                Author<label for="author"><input id="author"></label>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                Project<label for="project"><input id="project"></label>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                Cost<label for="cost"><input id="cost"></label>
+            </div>
+            <button style="width: 300px; padding: 5px" onclick="addProjectRow()">Add</button>
+        </form>
+    </div>
+    <div style="margin-top: 20px">
+        <table>
+            <thead>
+            <tr>
+                <th>Author</th>
+                <th>Project</th>
+                <th>Cost</th>
+            </tr>
+            </thead>
+            <tbody id="project-table-body">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    function addProjectRow(){
+        event.preventDefault();
+        let author = document.getElementById('author').value;
+        let project = document.getElementById('project').value;
+        let cost = parseFloat(document.getElementById('cost').value);
+        console.log(author)
+        console.log(project)
+        console.log(cost)
+
+        if(author === '' || project === '' || isNaN(cost)){
+            alert("All fields must be filled!")
+        }
+
+        let table_body = document.getElementById('project-table-body');
+        let trEl = document.createElement('tr');
+        trEl.innerHTML = `<td>${author}</td><td>${project}</td><td>${cost}</td>`
+        table_body.insertAdjacentElement('beforeend',trEl);
+        document.getElementById('author').value = '';
+        document.getElementById('project').value = '';
+        document.getElementById('cost').value = '';
+    }
+</script>
+</html>
