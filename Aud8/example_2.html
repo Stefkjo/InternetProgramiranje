@@ -1,0 +1,112 @@
+<!--Visualize the demographic distribution and income-->
+<!--data for a city's population. The dataset includes-->
+<!--information about population size for different age-->
+<!--groups and income details (average income and-->
+<!--number of people) across various occupations.-->
+<!--Create two visualizations: a pie chart to show the-->
+<!--population distribution by age group and a bubble-->
+<!--chart to display the income distribution by-->
+<!--occupation.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 2</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column">
+    <div>
+        <h1>Demographic and Income Visualization</h1>
+    </div>
+    <div style="display: flex">
+        <div id="plotly_pie"></div>
+        <div id="plotly_chart"></div>
+    </div>
+</div>
+</body>
+<script>
+    const data = [
+        {
+            ageRange: "18-25",
+            incomeData: [
+                {occupation: "Engineer", avgIncome: 50000, people: 3000},
+                {occupation: "Teacher", avgIncome: 40000, people: 2000},
+                {occupation: "Student", avgIncome: 10000, people: 7000}
+            ]
+        },
+        {
+            ageRange: "26-35",
+            incomeData: [
+                {occupation: "Engineer", avgIncome: 70000, people: 5000},
+                {occupation: "Teacher", avgIncome: 50000, people: 4000},
+                {occupation: "Doctor", avgIncome: 90000, people: 3000},
+                {occupation: "Other", avgIncome: 30000, people: 6000}
+            ]
+        },
+        {
+            ageRange: "36-45",
+            incomeData: [
+                {occupation: "Engineer", avgIncome: 80000, people: 4000},
+                {occupation: "Teacher", avgIncome: 55000, people: 3000},
+                {occupation: "Doctor", avgIncome: 95000, people: 2000},
+                {occupation: "Other", avgIncome: 40000, people: 6000}
+            ]
+        },
+        {
+            ageRange: "46-60",
+            incomeData: [
+                {occupation: "Engineer", avgIncome: 85000, people: 2000},
+                {occupation: "Teacher", avgIncome: 60000, people: 3000},
+                {occupation: "Doctor", avgIncome: 100000, people: 1000},
+                {occupation: "Other", avgIncome: 35000, people: 4000}
+            ]
+        }
+    ];
+
+    function displayPieChart() {
+        let totalPeoplePerRange = data.map(ageGroup => {
+            return ageGroup.incomeData.reduce((total, currentItem) => total + currentItem.people, 0);
+        });
+        var values = [{
+            values: totalPeoplePerRange,
+            labels: data.map(d => d.ageRange),
+            type: 'pie'
+        }];
+        let layout = {
+            title: "Population distribution by age group"
+        }
+
+        Plotly.newPlot('plotly_pie', values, layout);
+    }
+
+    function displayLineChart() {
+        let traces = data.flatMap(g => g.incomeData.map(i => ({
+            x: [i.occupation],
+            y: [i.avgIncome],
+            mode: 'markers',
+            marker: {
+                size: [i.people],
+                sizemode: 'area',
+                sizeref: 30,
+                color: i.avgIncome
+            },
+            name: `${i.occupation} (${g.ageRange})`
+        })))
+
+        layout = {
+            title: "Income Distribution by Occupation",
+            xaxis: {title: "Occupation"},
+            yaxis: {title: "Average Income (USD)"},
+            showlegend: true
+        }
+
+        Plotly.newPlot('plotly_chart', traces, layout)
+    }
+
+    window.onload = function () {
+        displayPieChart();
+        displayLineChart();
+    }
+</script>
+</html>

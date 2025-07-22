@@ -1,0 +1,71 @@
+<!--Seven cards stacked on top of each other are-->
+<!--positioned in the upper-left corner. Every two-->
+<!--seconds, a card moves to the center of the screen,-->
+<!--lining up one after another. Once the entire-->
+<!--animation is complete, the cards rotate and-->
+<!--transform into circles during the rotation,-->
+<!--sequentially.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example 2</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        .card {
+            width: 150px;
+            height: 250px;
+            border-radius: 10%;
+            border: 1px solid black;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+</div>
+</body>
+<script>
+    let colors = ["green", "yellow", "red", "purple", "gray", "pink", "blue"]
+
+    function animateCards() {
+        let animeTimeline = anime.timeline({
+            loop: true,
+            ease: 'easeInOutSine'
+        })
+
+        for (let i = 0; i < 7; i++) {
+            animeTimeline.add({
+                targets: `.card-${i}`,
+                translateX: 180 * i,
+                translateY: 300 + i * 10,
+                duration: 1500,
+            }, i === 0 ? "-=0" : "-=1000")
+        }
+
+        for (let i = 0; i < 7; i++) {
+            animeTimeline.add({
+                targets: `.card-${i}`,
+                rotate: 720,
+                borderRadius: '50%',
+                duration: 3000,
+                height: 150
+            }, i === 0 ? "-=0" : "-=1500")
+        }
+    }
+
+    window.onload = function () {
+        for (let i = 0; i < 7; i++) {
+            let card = document.createElement('div');
+            card.classList.add('card');
+            card.classList.add(`card-${i}`);
+            card.style.background = colors[i];
+            card.style.left = `${i * 10}px`
+            card.style.top = `${i * 10}px`
+            document.getElementById('container').append(card);
+        }
+
+        setTimeout(animateCards, 3000);
+    }
+</script>
+</html>
