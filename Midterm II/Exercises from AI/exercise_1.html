@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Exercise 1</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <style>
     .card {
-        width: 150px;
-        height: 350px;
-        background: cadetblue;
+        width: 250px;
+        height: 300px;
+        background: #5f7ca0;
         display: inline-block;
         vertical-align: top;
         border: 1px solid black;
@@ -16,8 +18,26 @@
 </style>
 <body>
 <div>
-    <div id="card-container" style="display: flex; flex-wrap: wrap"></div>
+    <div style="margin-bottom: 25px;">
+        <div>
+            <h1 style="text-align: center">Online Store</h1>
+            <div style="display: flex; justify-content: center; gap: 20px">
+                <label>Category<select id="category">
+                    <option value="all">All</option>
+                    <option value="men's clothing">Men's Clothing</option>
+                    <option value="woman's clothing">Woman's Clothing</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="jewelery">Jewelery</option>
+                </select></label>
+                <label>Price<input id="price" type="number"></label>
+                <button onclick="getProductsSearch()">Search</button>
+                <button onclick="showProductCharts()">Show Data</button>
+            </div>
+        </div>
+    </div>
+    <div id="card-container" style="display: flex; flex-wrap: wrap; justify-content: space-evenly"></div>
 </div>
+<div id="chart-container"></div>
 </body>
 <script>
     let products = []
@@ -25,21 +45,61 @@
     async function getProducts() {
         let response = await fetch('https://fakestoreapi.com/products');
         products = await response.json();
-        displayCards();
+        displayCards(products);
     }
 
-    function displayCards() {
+    function displayCards(prod) {
         let container = document.getElementById('card-container');
         let string = ``;
-        products.forEach(p => {
-            string += `<div class="card" style="display: flex; flex-direction: column; align-items: center; text-align: center">
+        console.log(prod)
+        prod.forEach(p => {
+            string += `<div class="card" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
                         <p>Title: ${p.title}</p>
                         <p>Price: ${p.price}$</p>
-                        <img src="${p.image}" width="80" height="80" style="vertical-align: bottom">
+                        <img src="${p.image}" alt="..." width="75" height="75" style="vertical-align: bottom">
+                        <p>Rating: ${p.rating.rate}</p>
                         </div>`
         })
         container.innerHTML = string;
-        console.log(container.innerHTML)
+    }
+
+    function getProductsSearch() {
+        let category = document.getElementById('category').value;
+        let price = parseFloat(document.getElementById('price').value);
+        let valid;
+
+        valid = products.filter(p => p.category === category && p.price <= price);
+        displayCards(valid);
+    }
+
+    function showProductCharts() {
+        const cards = document.querySelectorAll('.card');
+
+        anime({
+            targets: cards,
+            opacity: [1, 0],
+            scale: [1, 0],
+            duration: 2000,
+            easing: 'easeInOutSine',
+            complete: function () {
+                cards.forEach(card => card.remove());
+            }
+        });
+
+        setTimeout(() => {
+            let prices = [];
+            let items = [];
+            cards.forEach(c => prices.push(parseFloat(c.children[1].innerText.split(":")[1].trim())));
+            cards.forEach(c => items.push(c.children[0].innerText.split(":")[1].trim().slice(0, 15)));
+
+            let trace = {
+                x: items,
+                y: prices.sort((a,b) => a-b),
+                type: 'bar'
+            }
+
+            Plotly.newPlot('chart-container', [trace])
+        }, 2000)
     }
 
     getProducts();
