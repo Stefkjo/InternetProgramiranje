@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 2</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .container {
+            width: 50%;
+            border: 1px solid black;
+        }
+
+        .card {
+            text-align: center;
+            border: 2px solid blueviolet;
+            display: inline-block;
+            margin: 10px 20px;
+            width: 120px;
+            height: 180px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <h1 style="text-align: center">Potion Crafting Game</h1>
+    </div>
+    <div style="display: flex">
+        <div class="container">
+            <div>
+                <h2 style="text-align: center">Picked recipe</h2>
+                <div id="picked-recipe"></div>
+            </div>
+            <div id="card-container" style="display: flex; flex-wrap: wrap; justify-content: center">
+            </div>
+        </div>
+        <div class="container">
+            <div>
+                <h2 style="text-align: center">Ingredients</h2>
+            </div>
+            <div id="ingredient-container" style="display: flex; flex-direction: column">
+                <div>
+                </div>
+                <div style="display: flex; justify-content: center">
+                    <img id="cauldron" src="https://clipground.com/images/witch-and-cauldron-clipart-4.jpg" width="400">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p id="completed"></p>
+    </div>
+</div>
+</body>
+<script>
+    const craftingData = {
+        "ingredients": [
+            {
+                "name": "Starlight Bloom",
+                "type": "Herb",
+                "image": "https://images.openai.com/thumbnails/url/KNGhmHicu1mUUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw5JN_IpCvOONE3LKaxwyog0MnPLMNe1LEgrSM4sckw0KA8JDklPNC1xSveMKjPOCDYrCzNwivDO9c5RKwYAwNQo_g"
+            },
+            {
+                "name": "Shadow Fern",
+                "type": "Herb",
+                "image": "https://images.openai.com/thumbnails/url/NUjGEnicu1mUUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw6KSnIsCDIxLnMu8y3ISrU0DHYKi6p0T_HIzwsrKQiwMPI1yvL2y6gyMMivivJ3DPQr8zbytjA0zHJSKwYAvTYoaA"
+            },
+            {
+                "name": "Dragon's Breath Pepper",
+                "type": "Herb",
+                "image": "https://images.openai.com/thumbnails/url/uko14nicu1mSUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw72KMjItEgJTjZw8840NnTN8C23yDMNyvc3KPBJDHDzzTcLMMqtqAgudXVOdjcp8bYsTMsPN46qCk4xSVcrBgAGjSl5"
+            },
+            {
+                "name": "Sunstone",
+                "type": "Gem",
+                "image": "https://images.openai.com/thumbnails/url/U0WRKnicu1mSUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw7MCs41za6MNC7ND4qMKs-NDyyOivf1sIj00C3yMLXwN80ItCz2D9KtLMzJ8vLy864MSzYpMEz2MItyDVQrBgAjXSmY"
+            },
+            {
+                "name": "Moonstone",
+                "type": "Gem",
+                "image": "https://images.openai.com/thumbnails/url/KNGhmHicu1mUUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw5JN_IpCvOONE3LKaxwyog0MnPLMNe1LEgrSM4sckw0KA8JDklPNC1xSveMKjPOCDYrCzNwivDO9c5RKwYAwNQo_g"
+            },
+            {
+                "name": "Spider Silk",
+                "type": "Critter Part",
+                "image": "https://images.openai.com/thumbnails/url/uko14nicu1mSUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw72KMjItEgJTjZw8840NnTN8C23yDMNyvc3KPBJDHDzzTcLMMqtqAgudXVOdjcp8bYsTMsPN46qCk4xSVcrBgAGjSl5"
+            },
+            {
+                "name": "Frog's Leg",
+                "type": "Critter Part",
+                "image": "https://images.openai.com/thumbnails/url/NUjGEnicu1mUUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw6KSnIsCDIxLnMu8y3ISrU0DHYKi6p0T_HIzwsrKQiwMPI1yvL2y6gyMMivivJ3DPQr8zbytjA0zHJSKwYAvTYoaA"
+            }
+        ]
+        ,
+        "recipes": [
+            {"potionName": "Healing Potion", "required": ["Starlight Bloom", "Frog's Leg", "Sunstone"]},
+            {"potionName": "Invisibility Potion", "required": ["Shadow Fern", "Moonstone", "Spider Silk"]},
+            {"potionName": "Fire-Breath Elixir", "required": ["Dragon's Breath Pepper", "Sunstone", "Frog's Leg"]}
+        ]
+    };
+    let ingredients = craftingData.ingredients;
+    let recipes = craftingData.recipes;
+    let pickedRecipe;
+    let correctIngredients = 0;
+    function startGame() {
+        let randomNum = Math.floor((recipes.length * Math.random())).toFixed();
+        let recipe = recipes[randomNum];
+        pickedRecipe = recipe;
+        let recipeDiv = document.getElementById('picked-recipe');
+        let pEl = document.createElement('p');
+        pEl.style.padding = "0 10px";
+        pEl.innerText = recipe.potionName + ': [ ';
+        recipe.required.forEach((i, index) => {
+            if (index === recipe.required.length - 1) {
+                pEl.innerText += i + ' '
+            } else {
+                pEl.innerText += i + ', '
+            }
+        })
+        pEl.innerText += ']'
+        pEl.style.fontSize = "20px";
+        pEl.style.textAlign = "center"
+        recipeDiv.appendChild(pEl);
+
+        let cardContainer = document.getElementById('card-container');
+        let string = ``;
+        ingredients.forEach(i => {
+            string += `<div class="card" onclick="pickIngredient(this)">
+<p style="font-size:18px">${i.name}</p>
+<img src="${i.image}" width="100" height="90" alt="">
+</div>`
+        });
+        cardContainer.innerHTML = string;
+    }
+
+    function pickIngredient(card) {
+        let ingredient = card.children[0].innerText;
+        if (pickedRecipe.required.indexOf(ingredient) === -1) {
+            anime({
+                targets: card,
+                keyframes: [
+                    {translateX: 20, duration: 500},
+                    {translateX: -20, duration: 500},
+                    {translateX: 20, duration: 500},
+                    {translateX: -20, duration: 500},
+                    {translateX: -0, duration: 500},
+                ],
+                easing: 'easeInOutSine',
+                duration: 2500
+            })
+        } else {
+            correctIngredients++;
+            let cauldronRect = document.getElementById('cauldron').getBoundingClientRect();
+            let cardRect = card.getBoundingClientRect();
+            let moveX = cauldronRect.left - cardRect.left + 60;
+            let moveY = cauldronRect.top - cardRect.top + 60
+
+            card.style.position = 'absolute';
+            let animation = anime({
+                targets: card,
+                translateX: moveX,
+                translateY: moveY,
+                rotate: '1turn',
+                easing: 'easeInOutSine',
+                duration: 2000,
+                complete: () => {
+                    card.remove();
+                }
+            })
+        }
+        console.log(correctIngredients, pickedRecipe.required.length)
+
+        if (correctIngredients === (pickedRecipe.required.length)) {
+            let pEl = document.getElementById('completed');
+            pEl.style.fontSize = "32px";
+            pEl.style.textAlign = "center"
+            pEl.innerText = "Nice Job, You completed a potion recipe."
+        }
+
+    }
+
+    startGame()
+</script>
+</html>
