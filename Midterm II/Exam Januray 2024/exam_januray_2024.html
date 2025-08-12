@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam January 2024</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+<div>
+    <div>
+        <h1>
+            COVID-19 Data Dashboard
+        </h1>
+        <div>
+            <button id="showData" onclick="displayCountriesData()">View All Countries</button>
+            <label>
+                <select id="countries" onchange="displayCountryData()">
+                </select>
+            </label>
+        </div>
+        <div id="flagDiv" style="margin:20px; display: none">
+            <img id="flag" src="" onclick="animateFlag()" width="250" height="200">
+        </div>
+    </div>
+    <div>
+        <div id="data-container">
+        </div>
+    </div>
+    <div>
+    </div>
+</div>
+</body>
+<script>
+    let countries = [];
+    let isCircle = false;
+    async function GetData() {
+        let response = await fetch('https://disease.sh/v3/covid-19/countries');
+        let data = await response.json();
+        countries = data;
+        displayCountriesData();
+        populateSelect();
+        console.log(data);
+    }
+
+    function displayCountriesData() {
+        let countryNames = countries.map(c => c.country);
+        let cases = countries.map(c => c.cases);
+        let recovered = countries.map(c => c.recovered);
+        let deaths = countries.map(c => c.deaths);
+
+        var trace1 = {
+            x: countryNames,
+            y: cases,
+            name: 'Cases',
+            type: 'bar'
+        };
+
+        var trace2 = {
+            x: countryNames,
+            y: recovered,
+            name: 'Recovered',
+            type: 'bar'
+        };
+
+        var trace3 = {
+            x: countryNames,
+            y: deaths,
+            name: 'Deaths',
+            type: 'bar'
+        };
+
+        var data = [trace1, trace2, trace3];
+
+        var layout = {title: "COVID-19 Data for ALL Countries", barmode: 'group'};
+
+        Plotly.newPlot('data-container', data, layout);
+
+        let flagImg = document.getElementById('flag');
+        if (flagImg.src !== null) {
+            let imgDiv = document.getElementById('flagDiv')
+            imgDiv.style.display = "none";
+        }
+    }
+
+    function displayCountryData() {
+        let selectedCountry = document.getElementById('countries').value;
+        console.log(selectedCountry)
+        let country = countries.find(c => c.country === selectedCountry);
+        console.log(country)
+        let cases = country.cases;
+        let recovered = country.recovered;
+        let deaths = country.deaths;
+
+        var trace1 = {
+            x: [selectedCountry],
+            y: [cases],
+            name: 'Cases',
+            type: 'bar'
+        };
+        var trace2 = {
+            x: [selectedCountry],
+            y: [recovered],
+            name: 'Recovered',
+            type: 'bar'
+        };
+        var trace3 = {
+            x: [selectedCountry],
+            y: [deaths],
+            name: 'Deaths',
+            type: 'bar'
+        };
+
+        var data = [trace1, trace2, trace3];
+
+        var layout = {title: `COVID-19 Data for ${selectedCountry}`, barmode: 'group'};
+
+        Plotly.newPlot('data-container', data, layout);
+
+        let flagImg = document.getElementById('flag');
+        flagImg.src = country.countryInfo.flag;
+
+        let imgDiv = document.getElementById('flagDiv')
+        imgDiv.style.display = "block";
+
+        anime({
+            targets: flagImg,
+            opacity: [0, 1],
+            easing: "easeInOutSine",
+            duration: 1000
+        })
+    }
+
+    function animateFlag() {
+        isCircle = !isCircle;
+        let flag = document.getElementById('flag');
+        anime({
+            targets: flag,
+            borderRadius: isCircle ? ["0","50%"] : ["50%", "0"],
+            keyframes: [
+                {scale: 1.2, duration: 500},
+                {scale: 1, duration: 500},
+                {scale: 1.2, duration: 500},
+                {scale: 1, duration: 500},
+            ],
+            duration: 500,
+            easing: 'easeInOutQuad',
+        })
+    }
+
+    function populateSelect() {
+        let selectEl = document.getElementById('countries');
+        countries.forEach(c => {
+            let optionEl = document.createElement('option');
+            optionEl.value = c.country;
+            optionEl.text = c.country;
+            selectEl.appendChild(optionEl);
+        })
+    }
+
+    GetData()
+</script>
+</html>
