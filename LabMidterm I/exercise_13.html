@@ -1,0 +1,24 @@
+<!--Write a program that reads a sentence from a prompt, and then takes a single letter (character) from a subsequent prompt.-->
+<!--Print all the positions where that letter (character) is found.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 13</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt("Enter a sentence: ");
+    let inputChar = prompt("Enter character to a search for: ");
+
+    let positions = [];
+    for (let i = 0; i < inputLine.length; i++) {
+        if (inputLine[i] === inputChar) {
+            positions.push(i);
+        }
+    }
+
+    alert(`Character '${inputChar}' found at positions: ${positions}`);
+</script>
+</html>

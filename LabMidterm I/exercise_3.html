@@ -1,8 +1,7 @@
-<!--Да се напише програма која за броеви внесени од тастатура-->
-<!--ќе определи дали се прости или не. (прости броеви се деливи-->
-<!--само сами со себе и со бројот 1).-->
-<!--Потоа да се запише во документот дали секој број е прост или не.-->
-<!--Броевите се внесуваат се додека корисникот не внесе знак-->
+<!--Write a program that determines whether numbers entered from the keyboard are prime or not.-->
+<!--(prime numbers are only divisible by themselves and the number 1).-->
+<!--Afterwards write whether said numbers are prime or not in the document.-->
+<!--The numbers are entered until the user enters a character.-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +22,7 @@
     }
 
     let inputNum = prompt("Внеси број:");
+
     while (inputNum !== '.') {
         if (isPrime(parseInt(inputNum))) {
             document.write(inputNum + ' е прост број' + "<br>");

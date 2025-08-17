@@ -1,0 +1,56 @@
+<!--Enter the teams and their code until @ is entered.-->
+<!--Then enter the codes of two teams and the result of the match they played.-->
+<!--The results are entered in the format:code1:code2;team1Goals:team2Goals-->
+<!--Entering results is terminated with the @ sign.-->
+<!--Print all the teams in the format: code team [goals] and using array functions, calculate the total number of goals.-->
+<!--Example input:-->
+<!--Real Madrid:1-->
+<!--Barcelona:2-->
+<!--Manchester United:3-->
+<!--@-->
+<!--1:2;0:4-->
+<!--2:3;1:2-->
+<!--@-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 22</title>
+</head>
+<body>
+</body>
+<script>
+    let footballTeams = [];
+    let input = prompt("Enter football team");
+    while (input !== "@") {
+        footballTeams.push({
+            id: input.split(":")[0],
+            name: input.split(":")[1],
+            scored: 0,
+            conceded: 0
+        })
+        input = prompt("Enter football team");
+    }
+    let matches = prompt("Enter the scores from the played matches:");
+    while (matches !== "@") {
+        let teamA = footballTeams.find(t => t.id === matches.split(";")[0].split(":")[0]);
+        let teamB = footballTeams.find(t => t.id === matches.split(";")[0].split(":")[1]);
+        let goalsTeamA = matches.split(";")[1].split(":")[0];
+        let goalsTeamB = matches.split(";")[1].split(":")[1];
+        teamA.scored = goalsTeamA;
+        teamA.conceded = goalsTeamB;
+        teamB.scored = goalsTeamB;
+        teamB.conceded = goalsTeamA;
+        matches = prompt("Enter the scores from the played matches:");
+    }
+
+    let string = ``;
+    let total = 0;
+    footballTeams.forEach((t, index) => {
+        string += (index + 1) + " " + t.name + ' ' + t.scored + ", " + t.conceded + "\n"
+        total += parseInt(t.scored);
+    })
+    string += `Total goals scored: ${total}`;
+    console.log(string);
+</script>
+</html>

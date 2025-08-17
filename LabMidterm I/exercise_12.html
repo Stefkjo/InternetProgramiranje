@@ -1,0 +1,36 @@
+<!--A string is entered through a prompt window. Replace all numbers greater than or equal to 32 inside the string with the corresponding ASCII character.-->
+<!--Help:-->
+<!--The function that can be used for conversion is String.fromCharCode()-->
+<!--Еxample:-->
+<!--Zdravo,32kako32s105? -> Zdravo, kako si?-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 12</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt("Input: ");
+    let finalString = "";
+
+    for (let i = 0; i < inputLine.length; i++) {
+        if (!isNaN(parseInt(inputLine.charAt(i)))) {
+            let num = 0;
+            while (!isNaN(parseInt(inputLine.charAt(i)))) {
+                num = num * 10 + parseInt(inputLine.charAt(i));
+                i++;
+            }
+            if (num >= 32) {
+                let char = String.fromCharCode(num);
+                console.log(char)
+                finalString += char;
+            }
+        }
+        finalString += inputLine.charAt(i);
+    }
+    console.log(finalString)
+    alert(finalString);
+</script>
+</html>

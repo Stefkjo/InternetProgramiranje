@@ -1,0 +1,48 @@
+<!--Write a program where the user inputs users. The users are entered in the following format:-->
+<!--firstName,lastName,email,phoneNumber; firstName,lastName,email,phoneNumber...-->
+<!--Next, a prompt window opens where the user enters an email provider, and based on that, the array of objects is filtered. Additionally, a new property is added to each object to indicate the type of mobile provider based on the phone number.-->
+<!--070/071/072 - Telekom-->
+<!--073/074 - Lyca Mobile-->
+<!--075/076/077/078 - A1-->
+<!--079 - MTEL-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 29</title>
+</head>
+<body>
+</body>
+<script>
+    function getPhoneProvider(phoneNumber) {
+        if (phoneNumber.slice(0, 3) === "070" || phoneNumber.slice(0, 3) === "072" || phoneNumber.slice(0, 3) === "072") {
+            return "Telekom";
+        } else if (phoneNumber.slice(0, 3) === "073" || phoneNumber.slice(0, 3) === "074") {
+            return "Lyca Mobile";
+        } else if (phoneNumber.slice(0, 3) === "075" || phoneNumber.slice(0, 3) === "076" || phoneNumber.slice(0, 3) === "077" || phoneNumber.slice(0, 3) === "078") {
+            return "A1"
+        } else {
+            return "MTEL"
+        }
+    }
+
+    let input = prompt("Enter users information:");
+    let userParts = input.split(";");
+    let users = [];
+
+    userParts.forEach(u => {
+        users.push({
+            name: u.split(",")[0],
+            surname: u.split(",")[1],
+            email: u.split(",")[2],
+            phoneNumber: u.split(",")[3],
+            phoneProvider: getPhoneProvider(u.split(",")[3])
+        })
+    })
+
+    let emailSearch = prompt("Enter email:");
+    users = users.filter(u => u.email.includes(emailSearch));
+
+    alert(JSON.stringify(users));
+</script>
+</html>

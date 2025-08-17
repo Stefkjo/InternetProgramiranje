@@ -1,0 +1,57 @@
+<!--Write a program where the user first enters krug (circle) or kvadrat (square). Then, for a circle, the radius is entered, while for a square, the side length is entered. The program should calculate the area and perimeter of the shape and print how many times one is larger than the other.-->
+<!--Circle:-->
+<!--Perimeter: 2 * r * PI-->
+<!--Area: r^2 * PI-->
+<!--Square:-->
+<!--Perimeter: 4 * a-->
+<!--Area: a^2-->
+<!--If anything other than krug or kvadrat is entered, print that the input is not valid.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 5</title>
+</head>
+<body>
+</body>
+<script>
+    function getBiggerPercent(a, b) {
+        return a >= b ? (a / b) * 100 : (b / a) * 100
+    }
+
+    let squareL = 0;
+    let squareP = 0;
+    let circleL = 0;
+    let circleP = 0;
+    let percentLBigger;
+    let percentPBigger;
+    let input = prompt("Enter the shape");
+
+    if (input === "circle") {
+        let radius = prompt("Enter circle radius");
+        radius = parseFloat(radius);
+        let side = prompt("Enter square side");
+        side = parseInt(side);
+        squareL = 4 * side;
+        squareP = Math.pow(side, 2);
+        circleL = (2 * radius * Math.PI).toFixed(2);
+        circleP = Math.pow(radius, 2) * Math.PI;
+
+        percentLBigger = getBiggerPercent(circleL, squareL);
+        percentPBigger = getBiggerPercent(circleP, squareP);
+        alert(percentLBigger + " " + percentPBigger)
+    } else if (input === "square") {
+        let side = prompt("Enter square side");
+        side = parseInt(side);
+        let radius = prompt("Enter circle radius");
+        radius = parseFloat(radius);
+        squareL = 4 * side;
+        squareP = Math.pow(side, 2);
+        circleL = (2 * radius * Math.PI).toFixed(2);
+        circleP = Math.pow(radius, 2) * Math.PI;
+        percentLBigger = getBiggerPercent(circleL, squareL);
+        percentPBigger = getBiggerPercent(circleP, squareP);
+        alert(percentLBigger + " " + percentPBigger)
+    }
+</script>
+</html>

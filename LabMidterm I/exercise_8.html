@@ -1,0 +1,25 @@
+<!--Numbers are entered through the keyboard until a character is entered.-->
+<!--After entering a character, display all even negative numbers entered on the screen.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z8</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt("Enter a number:");
+    let counter = 0;
+
+    while (!isNaN(inputLine)) {
+
+        if (parseInt(inputLine) % 2 === 0 && parseInt(inputLine) < 0) {
+            document.write(parseInt(inputLine) + '<br>');
+            counter++;
+        }
+        inputLine = prompt("Enter a number:");
+    }
+    document.write('Total: ' + counter);
+</script>
+</html>

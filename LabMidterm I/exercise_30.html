@@ -1,0 +1,99 @@
+<!--Create a website where by clicking the 'Generate' button, n -->
+<!--random numbers entered via an input field will be displayed on the screen.-->
+<!--Then, write down the number of even and odd numbers in a table. -->
+<!--Color the column with more numbers green and the other red. -->
+<!--If the number of even and odd numbers is the same, color both columns blue.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 30</title>
+</head>
+<style>
+    tr, td, th {
+        border: 1px solid black
+    }
+</style>
+<body>
+<div>
+    <label>
+        Enter n<input id="num" type="text">
+    </label>
+    <br>
+    <button onclick="generateNumbers()">Generate</button>
+</div>
+<div>
+    <p id="numbers"></p>
+    <table>
+        <thead>
+        <tr>
+            <th>Even</th>
+            <th>Odd</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="even"></td>
+            <td id="odd"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script>
+    let numbers = [];
+
+    function generateNumbers() {
+        let n = parseInt(document.getElementById('num').value);
+        let even = 0;
+        let odd = 0;
+
+        if (isNaN(n)) {
+            alert("You must enter a number!");
+        }
+
+        generate(n);
+
+        numbers.forEach(n => {
+            n.isEven ? even++ : odd++;
+        })
+
+        display(even, odd)
+    }
+
+    function generate(n) {
+        for (let i = 0; i < n; i++) {
+            let random = Math.floor(Math.random() * 100) + 1;
+            numbers.push({
+                number: random,
+                isEven: random % 2 === 0
+            });
+        }
+    }
+
+    function display(even, odd) {
+        let pEl = document.getElementById('numbers')
+        let string = ``;
+        let evenTd = document.getElementById('even');
+        let oddTd = document.getElementById('odd');
+
+        evenTd.innerText = even;
+        oddTd.innerText = odd;
+        numbers.forEach(n => {
+            string += `${n.number} `
+        })
+        pEl.innerText = string;
+
+        if (even > odd) {
+            evenTd.style.backgroundColor = "green";
+            oddTd.style.backgroundColor = "red";
+        } else if (odd > even) {
+            evenTd.style.backgroundColor = "red";
+            oddTd.style.backgroundColor = "green";
+        } else {
+            evenTd.style.backgroundColor = "lightblue";
+            oddTd.style.backgroundColor = "lightblue";
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!--To write a program where two numbers are entered through the keyboard.-->
+<!--In an alert window, display the number with a larger sum of divisors.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z7</title>
+</head>
+<body>
+</body>
+<script>
+    function getDivisors(num) {
+        let dCount = 0;
+        {
+            for (let i = 1; i < num; i++) {
+                if (num % i === 0) {
+                    dCount++;
+                }
+            }
+        }
+        return dCount;
+    }
+
+    let inputNumA = prompt("Enter the first number: ");
+    let inputNumB = prompt("Enter the second number: ");
+    let a = parseInt(inputNumA);
+    let b = parseInt(inputNumB);
+
+    if (getDivisors(a) > getDivisors(b)) {
+        alert(a);
+    } else if (getDivisors(b) > getDivisors(a)) {
+        alert(b);
+    } else {
+        alert("Same")
+    }
+</script>
+</html>

@@ -1,7 +1,6 @@
-<!--Да се напише програма во која преку тастатура се внесуваат-->
-<!--5 трицифрени броеви. Да се провери дали сите внесени податоци-->
-<!--се трицифрени броеви, доколку не се да се испечати соодветна порака.-->
-<!--Во alert прозорец да се прикажи бројот со најголемиот збир на цифрите.-->
+<!--Write a program in which 5 three-digit numbers are entered via the keyboard.-->
+<!--Check if all entered data are three-digit numbers, if they are not, print an appropriate message.-->
+<!--In an alert window, display the number with the largest sum of digits.-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +12,7 @@
 <script>
     let sumDigits = 0;
     let maxNum = "";
+
     for (let i = 1; i <= 5; i++) {
         let input = prompt("Внесете број" + i);
         if (input.length !== 3) {

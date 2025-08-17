@@ -1,0 +1,72 @@
+<!--Create a web page that highlights specific cards based on a randomly generated number.-->
+<!--The page should include a button that, when clicked, generates a random number between 1 and 10.-->
+<!--There should be a set of cards, each displaying a number. Once the random number is generated, the-->
+<!--program should check each card and determine whether its number is divisible by the random number.-->
+<!--Cards that meet this condition should be highlighted with a distinct background color.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 31</title>
+</head>
+<style>
+    .card {
+        display: inline-block;
+        padding: 10px;
+        font-weight: bold;
+        border: 1px solid black;
+        margin: 10px 10px 10px 0;
+    }
+</style>
+<body>
+<div>
+    <div>
+        <h1>Random Number:<span id="random-num"></span></h1>
+    </div>
+    <div>
+        <button onclick="generateRandomNumber()">Generate Random Number</button>
+    </div>
+    <div id="card-container">
+    </div>
+</div>
+</body>
+<script>
+    let numbers = [];
+
+    function generateRandomNumber() {
+        let random = Math.floor(Math.random() * 10) + 1;
+        let numberCards = document.getElementsByClassName('card');
+
+        for (let i = 0; i < numberCards.length; i++) {
+            if (parseInt(numberCards[i].innerHTML) % random === 0) {
+                numberCards[i].style.backgroundColor = "lightgreen"
+            }
+        }
+
+        document.getElementById('random-num').innerText = " " + random
+    }
+
+    function generateAndDisplayNumbers() {
+        let string = ``;
+
+        for (let i = 0; i < 20; i++) {
+            numbers.push(Math.floor(Math.random() * 100) + 1);
+        }
+
+        let counter = 0;
+        for (let i = 0; i < 5; i++) {
+            string += `<div>`
+            for (let j = 0; j < 4; j++) {
+                string += `<div class="card">${numbers[counter]}</div>`
+                counter++;
+            }
+            string += `</div>`
+        }
+
+        let cardContainer = document.getElementById('card-container');
+        cardContainer.innerHTML = string;
+    }
+
+    generateAndDisplayNumbers();
+</script>
+</html>

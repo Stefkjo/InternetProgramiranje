@@ -1,0 +1,27 @@
+<!--Create a program where the user inputs a string and a number at the beginning.-->
+<!--The string needs to be shifted for the same amount of spots as the inputted number.-->
+<!--If the number is positive, shift the string to the right, if it is negative, shift it to the left.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 19</title>
+</head>
+<body>
+</body>
+<script>
+    let string = prompt('Enter string:');
+    let num = prompt("Enter shift");
+    num = parseInt(num);
+    let shiftedString = '';
+    let shiftAmount = Math.abs(num) % string.length;
+
+    if (num < 0) {
+        shiftedString = string.substring(shiftAmount) + string.substring(0, shiftAmount);
+    } else {
+        shiftedString = string.substring(string.length - shiftAmount) + string.substring(0, string.length - shiftAmount);
+    }
+
+    alert(shiftedString);
+</script>
+</html>

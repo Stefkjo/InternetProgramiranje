@@ -1,0 +1,49 @@
+<!--Write a program in which, through a single prompt, the user should enter a first name, last name, email, and phone number. The user inputs data until they enter "*".-->
+<!--The entered inputs should be saved as objects and printed in the console in JSON format, sorted by the entered first name, only including those objects whose phone numbers start with 073.-->
+<!--Input:-->
+<!--Marta Martevska marta.martevska@mail.com 078234567-->
+<!--Stefan Stefanov stefan.stefanov@mail.com 073234567-->
+<!--Iva Ivanovska iva.ivanovska@mail.com 073123456-->
+<!--Output:-->
+<!--[-->
+<!--{-->
+<!--"name": "Iva",-->
+<!--"surname": "Ivanovska",-->
+<!--"email": "iva.ivanovska@mail.com",-->
+<!--"phone": "073123456"-->
+<!--},-->
+<!--{-->
+<!--"name": "Stefan",-->
+<!--"surname": "Stefanov",-->
+<!--"email": "stefan.stefanov@mail.com",-->
+<!--"phone": "073234567"-->
+<!--}-->
+<!--]-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 23</title>
+</head>
+<body>
+</body>
+<script>
+    let users = []
+    let newLine = prompt('Enter user: ')
+
+    while (newLine !== '*') {
+        let parts = newLine.split(' ')
+        let user = {
+            name: parts[0],
+            surname: parts[1],
+            email: parts[2],
+            phone: parts[3]
+        }
+        users.push(user);
+        newLine = prompt('Enter user: ');
+    }
+
+    users = users.filter(user => user.phone.slice(0, 3) === '073')
+    console.log(JSON.stringify(users));
+</script>
+</html>

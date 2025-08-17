@@ -1,0 +1,37 @@
+<!--Write a program that takes two words (separated by a space) in a single prompt. -->
+<!--It needs to check if the two words contain the same letters. -->
+<!--If they contain the same letters, print: "No differences found". -->
+<!--Otherwise, print which letters from which word are different.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 16</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt("Enter two words separated by a space: ");
+    let wordPars = inputLine.split(" ");
+    let wordA = wordPars[0];
+    let wordB = wordPars[1];
+    let finalFlag = true;
+
+    for (let i = 0; i < wordA.length; i++) {
+        let flag = false;
+        for (let j = 0; j < wordB.length; j++) {
+            if (wordA[i] === wordB[j]) {
+                flag = true;
+            }
+        }
+        if (!flag) {
+            alert("Difference found");
+            finalFlag = false;
+            break;
+        }
+    }
+    if (finalFlag) {
+        alert("No difference found");
+    }
+</script>
+</html>

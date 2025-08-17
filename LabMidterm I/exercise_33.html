@@ -1,0 +1,84 @@
+<!--Create a web page to record products sold.
+Enter the product name, its code, the product quantity
+and the price in text fields. Add a column to the table
+ for the total product sales.-->
+<!--If you are adding an existing product, change the data only in the table,
+ do not add it to a new row.-->
+<!--Note: All fields must be filled in before adding!-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 33</title>
+    <style>
+        th, td, tr {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <label>Name <input id="name"></label>
+        <br>
+        <label>Code <input id="code"></label>
+        <br>
+        <label>Price<input id="price"></label>
+        <br>
+        <label>Amount <input id="amount"></label>
+        <br>
+        <button onclick="addOrUpdateTable()">Add</button>
+    </div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Price</th>
+                <th>Amount</th>
+                <th>Total Sold</th>
+            </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    let fruits = [];
+
+    function addOrUpdateTable() {
+
+        let name = document.getElementById('name').value;
+        let fruit = fruits.find(f => f.name === name);
+        let price = parseInt(document.getElementById('price').value);
+        let amount = parseInt(document.getElementById('amount').value);
+        if (fruit === undefined) {
+            fruits.push({
+                name: name,
+                code: document.getElementById('code').value,
+                price: price,
+                amount: amount,
+                sold: amount * price
+            })
+        } else {
+            fruit.amount += amount;
+            fruit.sold = fruit.amount * fruit.price;
+        }
+        renderTable();
+    }
+
+    function renderTable() {
+        document.getElementById('table-body').innerHTML = '';
+        let table = document.getElementById('table-body');
+        let string = ``;
+
+        fruits.forEach(f => {
+            string += `<tr><td>${f.name}</td><td>${f.code}</td><td>${f.price}</td><td>${f.amount}</td><td>${f.sold}</td></tr>`
+        })
+
+        table.innerHTML = string;
+    }
+</script>
+</html>

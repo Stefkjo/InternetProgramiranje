@@ -1,0 +1,40 @@
+<!--Write a program in which the user, through a prompt, enters the number of books needed. -->
+<!--After that, they need to enter the properties of each book: title (string), author (string), -->
+<!--and alreadyRead (a boolean indicating whether the book has been read or not). -->
+<!--An array of objects should be created, where each object represents a single book. -->
+<!--The program should then iterate through all the objects in the array, and for each object, print the -->
+<!--title of the book, the author, and, based on whether it has been read or not, display the appropriate message.-->
+<!--Additionally, the books should be sorted by the author's name.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 26</title>
+</head>
+<body>
+</body>
+<script>
+    let numOfBooks = prompt("Enter the number of books you want to add:")
+    let books = [];
+    numOfBooks = parseInt(numOfBooks);
+
+    for (let i = 0; i < numOfBooks; i++) {
+        let title = prompt("Enter the title of the book:");
+        let author = prompt("Enter the author of the book:");
+        let isRead = confirm("Have you already read this book? (Ok if Yes, Cancel if No)");
+        books.push({
+            title: title,
+            author: author,
+            isRead: isRead
+        })
+    }
+
+    let string = ``;
+    books.sort((a, b) => a.author.localeCompare(b.author));
+    books.forEach(b => {
+        string += b.isRead ? `You have read ${b.title} by ${b.author}` : `You haven't have read ${b.title} by ${b.author}.\n`;
+    })
+
+    console.log(string);
+</script>
+</html>

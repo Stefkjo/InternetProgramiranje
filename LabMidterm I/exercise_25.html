@@ -1,0 +1,54 @@
+<!--One CSV file stores information about runners in the format:-->
+<!--code,name,surname,run1time,run2time,...,runNtime-->
+<!--Ex.-->
+<!--123,Petko,Petkovski,32,53,13,45,33-->
+<!--Write a program in which the information about the runners is written at the input and the runner with the lowest average time will be printed.-->
+<!--Example input:-->
+<!--124,Jane,Doe,28,42,55,37,49;125,Emily,Johnson,40,32;126,Michael,Brown,29,33,48,51,44,45,50,47;127,Sarah,Williams,34,54,23,38;128,David,Jones,45-->
+<!--Output: Emily Johnson-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 25</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt('Enter string: ');
+    let data = inputLine.split(';');
+    let runners = [];
+
+    data.forEach(person => {
+        let parts = person.split(',');
+        let timings = []
+        for (let i = 3; i < parts.length; i++) {
+            timings.push(parts[i])
+        }
+        let runner = {
+            id: parts[0],
+            name: parts[1],
+            surname: parts[2],
+            times: timings
+        }
+        runners.push(runner);
+    })
+
+    let bestAVGIndex = 0;
+    let bestAVG = 9999999;
+
+    for (let i = 0; i < runners.length; i++) {
+        let avg = 0;
+        for (let time of runners[i].times) {
+            avg += parseInt(time)
+        }
+        avg = avg / runners[i].times.length
+        if (avg < bestAVG) {
+            bestAVG = avg;
+            bestAVGIndex = i;
+        }
+    }
+
+    console.log(runners[bestAVGIndex].name, runners[bestAVGIndex].surname)
+</script>
+</html>

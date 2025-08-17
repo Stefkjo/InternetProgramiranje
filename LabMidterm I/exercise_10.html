@@ -1,15 +1,20 @@
+<!--Create a web page that reads a mobile number from the keyboard (via a prompt) in-->
+<!--the following format: XXYYYZZZ (e.g., 071234567). The program should then print it in the format XXX/YYY-ZZZ (e.g., 071/234-567).-->
+<!--Additionally, it should also print the name of the operator. -->
+<!--(070/071/072 - Telekom, 073 - MTEL, 074 - Telekabel, 075/076/077/078 - A1, 079 - LajkaMobile)-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Z10</title>
+    <title>Exercise 10</title>
 </head>
 <body>
 </body>
 <script>
-    let inputLine = prompt("Внеси го мобилниот број: ");
+    let inputLine = prompt("Enter the phone number: ");
     let input = inputLine.toString();
     let phoneNumber = input.slice(0, 3) + "/" + input.slice(3, 6) + "-" + input.slice(6);
+
     if (input.slice(0, 3) === '070' || input.slice(0, 3) === '071' || input.slice(0, 3) === '072') {
         alert(phoneNumber + " - Telekom");
     }

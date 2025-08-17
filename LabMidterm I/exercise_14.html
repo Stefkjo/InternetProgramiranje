@@ -1,0 +1,24 @@
+<!--Create a program that takes a sentence from the user.-->
+<!--From the sentence, all characters that are not letters or spaces should be removed.-->
+<!--Then, from the same sentence, all duplicate letters should be eliminated, and the result should be displayed on the screen.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z14</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt("Vnesi rechenica: ");
+    inputLine = inputLine.replaceAll(/[^a-zA-Z ]+/g, "");
+    let rez = "";
+    for (let i = 0; i < inputLine.length; i++) {
+        if (rez.indexOf(inputLine[i]) === -1 || inputLine[i] === " ") {
+            rez += inputLine[i];
+        }
+    }
+
+    alert(rez);
+</script>
+</html>

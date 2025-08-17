@@ -1,0 +1,26 @@
+<!--Create a web page that checks a four-digit number entered from the keyboard (via a prompt window) to see if -->
+<!--it is a palindrome and if it is divisible by the sum of its digits. If the entered number is not a four-digit number, -->
+<!--a message should be printed in an alert window stating that the number cannot be checked. Otherwise, a single message, -->
+<!--also in an alert window, should be displayed indicating whether it is a palindrome and whether it is divisible.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z9</title>
+</head>
+<body>
+</body>
+<script>
+    let inputNum = prompt("Enter a four digit number");
+
+    if (inputNum.length !== 4) {
+        alert("Invalid input!");
+    }
+
+    if ((inputNum[0] === inputNum[3] && inputNum[1] === inputNum[2]) && (parseInt(inputNum) % parseInt(inputNum[0]) + parseInt(inputNum[1]) + parseInt(inputNum[2]) + parseInt(inputNum[3]) === 0)) {
+        alert("It is palindrome and it is divisible.")
+    } else {
+        alert("It is either not a palindrome or not divisible.")
+    }
+</script>
+</html>

@@ -1,0 +1,92 @@
+<!--Create a web page for recording products sold. -->
+<!--You are given a table with products. In the input fields, -->
+<!--enter the name of the product and its quantity sold. -->
+<!--By clicking the 'Update' button, the quantity is increased-->
+<!--and the total sales are calculated.-->
+<!--Note: All fields must be filled in before updating!-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 32</title>
+</head>
+<style>
+    tr, td, th, thead, tbody {
+        border: 1px solid black;
+    }
+</style>
+<body>
+<div>
+    <div>
+        <label>
+            Name <input id="item" type="text">
+        </label>
+        <br>
+        <label>
+            Sold amount <input id="amount" type="text">
+        </label>
+        <br>
+        <button onclick="updateTable()">Update</button>
+    </div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Price</th>
+                <th>Amount</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            <tr>
+                <td>Apples</td>
+                <td>122</td>
+                <td>20</td>
+                <td>17</td>
+                <td>340</td>
+            </tr>
+            <tr>
+                <td>Pears</td>
+                <td>123</td>
+                <td>15</td>
+                <td>15</td>
+                <td>225</td>
+            </tr>
+            <tr>
+                <td>Cherries</td>
+                <td>124</td>
+                <td>100</td>
+                <td>2</td>
+                <td>200</td>
+            </tr>
+            <tr>
+                <td>Peaches</td>
+                <td>125</td>
+                <td>55</td>
+                <td>6</td>
+                <td>330</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    function updateTable() {
+        let item = document.getElementById('item').value;
+        let amount = parseInt(document.getElementById('amount').value);
+        let rows = document.getElementById('table-body').children;
+        for (let i = 0; i < rows.length; i++) {
+            let itemName = rows[i].children[0].innerHTML;
+            if (item === itemName) {
+                let newPrice = parseInt(rows[i].children[4].innerHTML) + (amount * parseInt(rows[i].children[2].innerHTML));
+                let newAmount = parseInt(rows[i].children[3].innerHTML) + amount;
+                rows[i].children[4].innerHTML = newPrice + '';
+                rows[i].children[3].innerHTML = newAmount + '';
+            }
+        }
+    }
+</script>
+</html>

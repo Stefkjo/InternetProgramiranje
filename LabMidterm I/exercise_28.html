@@ -1,0 +1,29 @@
+<!--Write a program where the user enters values separated by ",". -->
+<!--The program should create an array of objects, where for each number in the object -->
+<!--it additionally stores its square and whether the number is even or not. -->
+<!--Finally, the array should be sorted by the number value in each object.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 28</title>
+</head>
+<body>
+</body>
+<script>
+    let input = prompt("Enter numbers:");
+    let numbers = input.split(",");
+    let numbersJSON = [];
+
+    numbers.forEach(n => {
+        numbersJSON.push({
+            number: parseInt(n),
+            squared: Math.pow(parseInt(n), 2),
+            isEven: parseInt(n) % 2 === 0
+        })
+    })
+    numbersJSON.sort((a, b) => a.number - b.number)
+
+    alert(JSON.stringify(numbersJSON))
+</script>
+</html>

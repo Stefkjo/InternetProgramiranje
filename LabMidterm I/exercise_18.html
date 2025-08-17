@@ -1,0 +1,30 @@
+<!--Write a program where the user enters a sentence. The program should reverse the order -->
+<!--of the words and print the sentence in reverse, -->
+<!--with each word starting with a capital letter and the rest in lowercase.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 18</title>
+</head>
+<body>
+</body>
+<script>
+    let inputLine = prompt("Enter a sentence: ");
+    let inputParts = inputLine.split(" ");
+    let finalSentence = ``;
+    inputParts.reverse();
+
+    for (let i = 0; i < inputParts.length; i++) {
+        for (let j = 0; j < inputParts[i].length; j++) {
+            if (j === 0) {
+                finalSentence += inputParts[i][0].toUpperCase();
+                j++;
+            }
+            finalSentence += inputParts[i][j].toLowerCase();
+        }
+        finalSentence += ' ';
+    }
+    alert(finalSentence);
+</script>
+</html>

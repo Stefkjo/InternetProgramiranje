@@ -1,0 +1,30 @@
+<!--Write a program that will allow dividing a string according to two characters.
+Through a prompt window, enter the two characters, separated by ;-->
+<!--Through another prompt window, enter a string.-->
+<!--Display all received strings on the screen.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 15</title>
+</head>
+<body>
+</body>
+<script>
+    let inputSplit = prompt("Enter two characters: ");
+    let inputLine = prompt("Enter the string: ");
+    let splitParts = inputSplit.split(";");
+    let charA = splitParts[0];
+    let charB = splitParts[1];
+    inputLine = inputLine.split(charB);
+
+    for (let i = 0; i < inputLine.length; i++) {
+        inputLine[i] = inputLine[i].split(charA);
+    }
+    inputLine = inputLine.flat(1);
+
+    for (let i = 0; i < inputLine.length; i++) {
+        document.write(inputLine[i] + "<br>");
+    }
+</script>
+</html>

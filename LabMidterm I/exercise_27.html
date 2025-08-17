@@ -1,0 +1,42 @@
+<!--Create a web page where the user enters information about students in the following format:-->
+<!--name index grade1 grade2 ... gradeN;name index grade1 grade2 ... gradeN;...-->
+<!--Calculate the average grade of each student.-->
+<!--At the end, display the students on the screen in JSON format, sorted based on their names in alphabetical order.-->
+<!--To convert the array into JSON format use the function JSON.stringify().-->
+<!--Example input:-->
+<!--Ana 2108 88 90 76;Stefan 1201 40 33;Marija 2502 100;Jana 0907 66 92 81;Kiril 1806 93 99;Luka 3105 40 60;Beks 2004 78 93 91;Dimi 0110 70 71 68;Viki 1409 54 91 93 45;Koki 2505 35 78 49-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 27</title>
+</head>
+<body>
+</body>
+<script>
+    let input = prompt("Enter student info:");
+    let students = [];
+    let studentParts = input.split(";");
+
+    studentParts.forEach(o => {
+        let parts = o.split(" ");
+        let name = parts[0];
+        let index = parts[1];
+        let grades = parts.slice(2);
+        let avg = 0;
+        grades.forEach(g => {
+            avg += parseInt(g);
+        })
+        avg = (avg / grades.length).toFixed(2);
+        students.push({
+            name: name,
+            index: index,
+            grades: grades,
+            avg: avg
+        });
+    })
+    students.sort((a, b) => a.name.localeCompare(b.name))
+
+    alert(JSON.stringify(students));
+</script>
+</html>

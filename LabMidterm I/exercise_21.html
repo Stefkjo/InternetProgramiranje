@@ -1,17 +1,23 @@
+<!--Make a web page where from the keyboard (via prompt) you will enter 3 strings. It should print the longest word within all 3 strings in an alert window.-->
+<!--Example Input:-->
+<!--First laboratory exercise-->
+<!--It's very hot in this lab-->
+<!--It's a beautiful day outside-->
+<!--Output: laboratory-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Z21</title>
+    <title>Exercise 21</title>
 </head>
 <body>
 </body>
 <script>
-
     let longestWord = ''
     let maxLength = 0;
+
     for(let i = 0;i<3;i++){
-        let newLine = prompt("Vnesi recenica: ");
+        let newLine = prompt("Enter a string: ");
         let words = newLine.split(" ");
         words.forEach(word => {
             if(word.length>maxLength){
@@ -21,7 +27,5 @@
         })
     }
     alert(longestWord);
-
-
 </script>
 </html>

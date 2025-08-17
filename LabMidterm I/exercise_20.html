@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 20</title>
+</head>
+<body>
+</body>
+<script>
+    function isPalindrome(word) {
+        for (let i = 0, j = word.length - 1; i < word.length / 2; i++, j--) {
+            if (word[i] !== word[j]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    let string = prompt("Enter words separated with ; ");
+    let words = string.split(";");
+    let palindromeWords = [];
+    console.log(words);
+    words.forEach(w => {
+        if (isPalindrome(w)) {
+            palindromeWords.push(w);
+        }
+    })
+
+    alert(`Out of ${words.length}, ${palindromeWords.length} words are palindrome and those are: ${palindromeWords}`)
+</script>
+</html>
